@@ -1,0 +1,7 @@
+.task
+.idea
+.vscode/*
+!.vscode/settings.json
+
+*.log
+*.db

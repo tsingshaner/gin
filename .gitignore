@@ -3,5 +3,9 @@
 .vscode/*
 !.vscode/settings.json
 
+target
+logs
+api/open-api/swagger.json
+
 *.log
 *.db

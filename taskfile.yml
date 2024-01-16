@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+env:
+  GO111MODULE: on
+  GOPROXY: https://goproxy.cn,direct
+
+# 监听文件变化的时间间隔
+interval: 500ms
+
+tasks:
+  install:
+    summary: 安装依赖
+    cmds:
+      - go mod download
+
+  docs:
+    summary: 更新 swagger 文档
+    cmds:
+      - swag init -g ./cmd/server/main.go -o ./api/open-api
+
+  dev:
+    summary: 监听文件变化自动重启
+    method: none
+    run: always
+    sources:
+      - "cmd/server/main.go"
+      - "pkg/**/*.go"
+      - "internal/**/*.go"
+      - "config/*.yaml"
+      - "config/config.go"
+    watch: true
+    cmds:
+      - cmd: "taskkill /IM main.exe /F"
+        platforms: [windows]
+        ignore_error: true
+        silent: true
+      - cmd: pkill -f "main.exe"
+        platforms: [linux, darwin]
+        ignore_error: true
+        silent: true
+      - task: run
+
+  run:
+    summary: 启动服务
+    cmds:
+      - go run ./cmd/server/main.go
+
+  build:
+    cmds:
+      - cmd: "go build -o ./target/main ./cmd/server/main.go"
+        platforms: [linux, darwin]
+      - cmd: "go build -o ./target/main.exe ./cmd/server/main.go"
+        platforms: [windows]
+
+  fmt:
+    summary: 格式化代码
+    cmds:
+      - go fmt ./...
+      - swag fmt

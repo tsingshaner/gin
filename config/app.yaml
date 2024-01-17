@@ -1,0 +1,26 @@
+server:
+  prefix: /api
+  host: 127.0.0.1
+  port: 4936
+cors:
+  headers: ["*"]
+  methods: ["*"]
+  origins: ["course.qingshaner.com"]
+  credentials: false
+  maxAge: 0
+logger:
+  level: debug
+  path: logs
+  filename: app.log
+  maxSize: 500
+  maxBackups: 3
+database:
+  # 自行修改
+  postgres: 'postgres://qingshaner:123456@localhost:5432/mimo'
+  # 自行修改
+  redis: 'redis://localhost:6379/0'
+jwt:
+  # 自行修改
+  secret: 'abcdefg'
+  # 小时
+  expiration: 72

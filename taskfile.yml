@@ -28,7 +28,7 @@ tasks:
       - "pkg/**/*.go"
       - "internal/**/*.go"
       - "config/*.yaml"
-      - "config/config.go"
+      - "config/*.go"
     watch: true
     cmds:
       - cmd: "taskkill /IM main.exe /F"
@@ -58,3 +58,9 @@ tasks:
     cmds:
       - go fmt ./...
       - swag fmt
+
+  rsa:
+    summary: 生成 RSA 密钥对用于 JWT
+    cmds:
+      - openssl genpkey -algorithm RSA -out ./private_key.pem -pkeyopt rsa_keygen_bits:2048
+      - openssl rsa -pubout -in ./private_key.pem -out ./public_key.pem

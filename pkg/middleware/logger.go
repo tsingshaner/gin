@@ -3,13 +3,12 @@ package middleware
 import (
 	"context"
 	"fmt"
-	"io"
 	"log/slog"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/lab-online/pkg/color"
 	"github.com/lab-online/pkg/logger"
-	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 type LogParams struct {
@@ -19,44 +18,88 @@ type LogParams struct {
 	Latency  time.Duration
 	Start    time.Time
 	ErrorMsg string
+	Level    slog.Level
 }
 
 type LoggerConfig struct {
-	Output           io.Writer               // 文件日志输出
-	Logger           func(*LogParams)        // 文件日志记录
+	Level            *int                     // 日志级别 0-199: -4, 200-399: 0, 400-499: 4, 500-: 8
+	FileLogger       func(*LogParams)        // 文件日志记录
 	Console          bool                    // 启用控制台日志, 生产环境建议关闭
 	ConsoleFormatter func(*LogParams) string // 控制台日志格式化
 }
 
-func formatStatus(status int) string {
-	switch {
-	case status >= 200 && status < 400:
-		return logger.Style(fmt.Sprintf("%5d:", status), logger.ColorGreen, logger.FontBold)
-	case status >= 400 && status < 500:
-		return logger.Style(fmt.Sprintf("%5d:", status), logger.ColorYellow, logger.FontBold)
-	case status >= 500:
-		return logger.Style(fmt.Sprintf("%5d:", status), logger.ColorRed, logger.FontBold)
-	default:
-		return logger.Style(fmt.Sprintf("%5d:", status), logger.ColorCyan, logger.FontBold)
+func Logger(conf LoggerConfig) gin.HandlerFunc {
+	if conf.FileLogger == nil {
+		conf.FileLogger = defaultFileLogger
+	}
+	if conf.Console && conf.ConsoleFormatter == nil {
+		conf.ConsoleFormatter = defaultConsoleFormatter
+	}
+
+	return func(c *gin.Context) {
+		params := LogParams{
+			Method: c.Request.Method,
+			Path:   c.Request.URL.Path,
+			Start:  time.Now(),
+		}
+		if c.Request.URL.RawQuery != "" {
+			params.Path = params.Path + "?" + c.Request.URL.RawQuery
+		}
+
+		c.Next()
+
+		params.Status = c.Writer.Status()
+		params.Level = getLevelByStatus(params.Status)
+		if level := int(params.Level); *conf.Level > level {
+			return
+		}
+		params.Latency = time.Since(params.Start)
+		params.ErrorMsg = c.Errors.ByType(gin.ErrorTypePrivate).String()
+
+		go func(params *LogParams) {
+			if params.Latency > time.Minute {
+				params.Latency = params.Latency.Truncate(time.Second)
+			}
+			conf.FileLogger(params)
+			if conf.Console {
+				fmt.Println(conf.ConsoleFormatter(params))
+			}
+		}(&params)
 	}
 }
 
-func defaultLogger(params *LogParams) {
-	var level slog.Level
+func getLevelByStatus(status int) slog.Level {
 	switch {
-	case params.Status >= 200 && params.Status < 400:
-		level = slog.LevelInfo
-	case params.Status >= 400 && params.Status < 500:
-		level = slog.LevelWarn
-	case params.Status >= 500:
-		level = slog.LevelError
+	case status >= 200 && status < 400:
+		return slog.LevelInfo
+	case status >= 400 && status < 500:
+		return slog.LevelWarn
+	case status >= 500:
+		return slog.LevelError
 	default:
-		level = slog.LevelDebug
+		return slog.LevelDebug
 	}
+}
 
+func formatStatus(status int) string {
+	formattedStatus := color.Bold(fmt.Sprintf("%5d:", status))
+
+	switch {
+	case status >= 200 && status < 400:
+		return color.Green(formattedStatus)
+	case status >= 400 && status < 500:
+		return color.Yellow(formattedStatus)
+	case status >= 500:
+		return color.Red(formattedStatus)
+	default:
+		return color.Cyan(formattedStatus)
+	}
+}
+
+func defaultFileLogger(params *LogParams) {
 	slog.LogAttrs(
 		context.Background(),
-		level,
+		params.Level,
 		"logger middleware",
 		slog.String("method", params.Method),
 		slog.String("path", params.Path),
@@ -69,57 +112,9 @@ func defaultLogger(params *LogParams) {
 func defaultConsoleFormatter(params *LogParams) string {
 	return fmt.Sprintf("%s %s %s %-50s +%s",
 		formatStatus(params.Status),
-		logger.Style(params.Start.Format("2006/01/02 15:04:05"), logger.FontDim),
+		color.Dim(params.Start.Format("2006/01/02 15:04:05")),
 		logger.FormatMethod(params.Method),
-		logger.Style(params.Path, logger.ColorGreen),
+		color.Green(params.Path),
 		params.Latency,
 	)
-}
-
-func Logger(conf LoggerConfig) gin.HandlerFunc {
-	if conf.Logger == nil {
-		conf.Logger = defaultLogger
-	}
-	if conf.Console && conf.ConsoleFormatter == nil {
-		conf.ConsoleFormatter = defaultConsoleFormatter
-	}
-	if conf.Output == nil {
-		logger.Error("LoggerConfig.Output is nil")
-		panic("")
-	}
-	slog.SetDefault(slog.New(slog.NewJSONHandler(&lumberjack.Logger{
-		Filename:   "logs/server.log",
-		MaxSize:    10,
-		MaxBackups: 3,
-		MaxAge:     7,
-		LocalTime:  true,
-		Compress:   true,
-	}, nil)))
-
-	return func(c *gin.Context) {
-		params := LogParams{
-			Method: c.Request.Method,
-			Path:   c.Request.URL.Path,
-			Start:  time.Now(),
-		}
-		if c.Request.URL.RawPath != "" {
-			params.Path = params.Path + "?" + c.Request.URL.RawPath
-		}
-
-		c.Next()
-
-		params.Latency = time.Since(params.Start)
-		params.Status = c.Writer.Status()
-		params.ErrorMsg = c.Errors.ByType(gin.ErrorTypePrivate).String()
-
-		go func() {
-			if params.Latency > time.Minute {
-				params.Latency = params.Latency.Truncate(time.Second)
-			}
-			conf.Logger(&params)
-			if conf.Console {
-				fmt.Println(conf.ConsoleFormatter(&params))
-			}
-		}()
-	}
 }

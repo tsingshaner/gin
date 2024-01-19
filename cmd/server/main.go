@@ -57,6 +57,7 @@ func main() {
 			Level:   &config.Logger.HttpLevel,
 		}),
 		middleware.CORS(corsConfig),
+		middleware.Recover(),
 	)
 
 	serverAddr := fmt.Sprintf("%s:%d", config.Server.Host, config.Server.Port)

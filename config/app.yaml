@@ -2,25 +2,41 @@ server:
   prefix: /api
   host: 127.0.0.1
   port: 4936
+  # debug, release
+  mode: debug
 cors:
-  headers: ["*"]
-  methods: ["*"]
-  origins: ["course.qingshaner.com"]
-  credentials: false
-  maxAge: 0
+  allowHeaders: ["*"]
+  allowMethods: [GET, POST, PUT, PATCH, DELETE, OPTIONS]
+  allowOrigins: ["https://mimo.qingshaner.com"]
+  allowCredentials: false
+  # 分
+  maxAge: 60
+# 所以日志字段支持热更新
 logger:
-  level: debug
+  # 使用位掩码筛选 1: debug, 2: info, 4: warn, 8: error
+  consoleLevel: 15
+  # -4: debug, 0: info, 4: warn, 8: error
+  slogLevel: 4
+  # -4: debug, 0: info, 4: warn, 8: error
+  httpLevel: -4
+  # 日志文件夹
   path: logs
+  # 日志文件名
   filename: app.log
-  maxSize: 500
+  # 单文件最大大小 / MB
+  maxSize: 10
+  # 最多文件数
   maxBackups: 3
+  # 最大保留天数
+  maxAge: 7
 database:
   # 自行修改
-  postgres: 'postgres://qingshaner:123456@localhost:5432/mimo'
+  postgres: "postgres://qingshaner:123456@localhost:5432/mimo"
   # 自行修改
-  redis: 'redis://localhost:6379/0'
+  redis: "redis://localhost:6379/0"
 jwt:
-  # 自行修改
-  secret: 'abcdefg'
+  issuer: "mimo"
   # 小时
   expiration: 72
+  publicKeyPath: ./public_key.pem
+  privateKeyPath: ./private_key.pem

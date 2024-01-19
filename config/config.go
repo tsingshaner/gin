@@ -20,24 +20,13 @@ func init() {
 	setupConfig(filename, config_type, dir)
 }
 
-type DatabaseConfig struct {
-	Postgres string // postgres URI
-	Redis    string // redis URI
-}
-
-var Database DatabaseConfig
-
 func unmarshalConfig() {
 	viper.AutomaticEnv()
 	viper.WatchConfig()
 
 	setupServerConfig()
-
-	requireConfig("database.postgres")
-	if err := viper.UnmarshalKey("database", &Database); err != nil {
-		panic(err)
-	}
-
+	setupCORSConfig()
+	setupDatabaseConfig()
 	setupLoggerConfig()
 	setupJWTConfig()
 }
@@ -67,7 +56,7 @@ func setupConfig(filename string, config_type string, dir string) {
 func requireConfig(key ...string) {
 	for _, k := range key {
 		if !viper.IsSet(k) {
-			panic("config field `" +color.Red(k) + "` is required")
+			panic("config field `" + color.Red(k) + "` is required")
 		}
 	}
 }

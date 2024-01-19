@@ -22,7 +22,7 @@ type LogParams struct {
 }
 
 type LoggerConfig struct {
-	Level            *int                     // 日志级别 0-199: -4, 200-399: 0, 400-499: 4, 500-: 8
+	Level            *int                    // 日志级别 0-199: -4, 200-399: 0, 400-499: 4, 500-: 8
 	FileLogger       func(*LogParams)        // 文件日志记录
 	Console          bool                    // 启用控制台日志, 生产环境建议关闭
 	ConsoleFormatter func(*LogParams) string // 控制台日志格式化

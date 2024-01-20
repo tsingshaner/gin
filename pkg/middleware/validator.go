@@ -1,14 +1,17 @@
 package middleware
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"reflect"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/lab-online/pkg/color"
-	"github.com/lab-online/pkg/constant/response"
+	"github.com/lab-online/pkg/constant"
+	"github.com/lab-online/pkg/shared"
 )
 
 // Todo interface{} 约束为结构体指针
@@ -94,16 +97,30 @@ func registerValidator(options validatorMap, optionKey validatorKeyMap, key stri
 }
 
 func handleValidatorError(c *gin.Context, err error) {
-	if validationErr, ok := err.(validator.ValidationErrors); ok {
+	var validationErrs validator.ValidationErrors
+	if errors.As(err, &validationErrs) {
+		errMsg := map[string]string{}
+		for _, e := range validationErrs {
+			key := namespaceToLowerCase(e.StructNamespace())
+			errMsg[key] = fmt.Sprintf("validate failed: %s", e.ActualTag())
+		}
+
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"code": response.VALIDATE_ERROR,
-			"msg":  validationErr.Error(),
+			"code": constant.VALIDATE_ERROR,
+			"msg":  errMsg,
 		})
 	} else {
-		fmt.Println(err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"code": response.VALIDATE_ERROR,
+			"code": constant.VALIDATE_ERROR,
 			"msg":  err.Error(),
 		})
 	}
+}
+
+func namespaceToLowerCase(namespace string) string {
+	tokens := strings.Split(namespace, ".")
+	for i, token := range tokens {
+		tokens[i] = shared.UpperCamelCaseToLowerCameCase(token)
+	}
+	return strings.Join(tokens, ".")
 }

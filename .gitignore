@@ -5,7 +5,10 @@
 
 target
 logs
+coverage
 api/open-api/swagger.json
 
 *.log
 *.db
+
+**/*.pem

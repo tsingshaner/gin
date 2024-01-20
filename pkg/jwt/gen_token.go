@@ -15,7 +15,7 @@ func GenToken(userID string, role uint8) string {
 		Role:   role,
 		RegisteredClaims: jwt.RegisteredClaims{
 			Issuer:    config.JWT.Issuer,
-			IssuedAt: jwt.NewNumericDate(now),
+			IssuedAt:  jwt.NewNumericDate(now),
 			ExpiresAt: jwt.NewNumericDate(now.Add(time.Duration(config.JWT.Expire) * time.Hour)),
 		},
 	}

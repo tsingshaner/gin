@@ -6,6 +6,7 @@ import (
 	"github.com/lab-online/internal/user/handler"
 	"github.com/lab-online/internal/user/infra/repository"
 	"github.com/lab-online/internal/user/interface/http"
+	"github.com/lab-online/pkg/middleware"
 	"gorm.io/gorm"
 )
 
@@ -22,13 +23,13 @@ func NewUserRoutes(db *gorm.DB) *UserRoutes {
 }
 
 func (u *UserRoutes) Register(r *gin.RouterGroup) {
-	user := r.Group("/user")
+	user := r.Group("/user/")
 
-	user.DELETE("/:id", u.DeleteUser)
-	user.GET("/", u.GetUserList)
-	user.GET("/:id", u.GetUserProfile)
-	user.PATCH("/:id", u.UpdateUser)
-	user.POST("/", u.AddUserValidator(), u.AddUser)
-	user.POST("/login", u.Login)
-	user.PUT("/:id", u.UpdateUser)
+	user.DELETE(":id", u.DeleteUser)
+	user.GET("", u.GetUserList)
+	user.GET(":id", u.GetUserProfile)
+	user.PATCH(":id", u.UpdateUser)
+	user.POST("", middleware.Validator(handler.RegisterReq), u.UserHandler.Register)
+	user.POST("login", u.Login)
+	user.PUT(":id", u.UpdateUser)
 }

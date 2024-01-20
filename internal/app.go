@@ -11,9 +11,9 @@ type Server interface {
 }
 
 type AppContext struct {
-	db *gorm.DB
+	DB *gorm.DB
 }
 
-func NewApp(db *gorm.DB) *AppContext {
+func NewApp(db *gorm.DB) Server {
 	return &AppContext{db}
 }

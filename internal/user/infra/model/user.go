@@ -1,17 +1,12 @@
 package model
 
 import (
-	"database/sql"
-	"time"
+	baseModel "github.com/lab-online/pkg/model"
 )
 
 type User struct {
-	ID       int64  `gorm:"index"`
+	baseModel.BaseModel
 	UserID   string `gorm:"unique"`
-	Username string
 	Password string
 	Role     int8
-	Created  time.Time
-	Updated  time.Time
-	Deleted  sql.NullTime
 }

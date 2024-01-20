@@ -5,5 +5,5 @@ import (
 )
 
 func (app *AppContext) Migrate() error {
-	return app.db.AutoMigrate(&userModel.User{})
+	return app.DB.AutoMigrate(&userModel.User{})
 }

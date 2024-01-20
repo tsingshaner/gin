@@ -2,8 +2,10 @@ server:
   prefix: /api
   host: 127.0.0.1
   port: 4936
-  # debug, release
+    # debug, release
   mode: debug
+  enableOpenAPI: true
+  openAPIRoute: /open-api
 cors:
   allowHeaders: ["*"]
   allowMethods: [GET, POST, PUT, PATCH, DELETE, OPTIONS]
@@ -17,6 +19,8 @@ logger:
   consoleLevel: 15
   # -4: debug, 0: info, 4: warn, 8: error
   slogLevel: 4
+  # 控制台是否打印请求日志
+  consoleHttp: true
   # -4: debug, 0: info, 4: warn, 8: error
   httpLevel: -4
   # 日志文件夹

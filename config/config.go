@@ -9,15 +9,11 @@ import (
 )
 
 func init() {
-	pflag.String("config_filename", "app", "config file name")
-	pflag.String("config_type", "yaml", "config file type")
-	pflag.String("config_dir", "./config", "config file path")
+	var configFile string
+	pflag.StringVarP(&configFile, "config", "c", "./config/app.yaml", "config file path")
+	pflag.Parse()
 
-	filename := pflag.Lookup("config_filename").Value.String()
-	config_type := pflag.Lookup("config_type").Value.String()
-	dir := pflag.Lookup("config_dir").Value.String()
-
-	setupConfig(filename, config_type, dir)
+	setupConfig(configFile)
 }
 
 func unmarshalConfig() {
@@ -31,24 +27,14 @@ func unmarshalConfig() {
 	setupJWTConfig()
 }
 
-func setupConfig(filename string, config_type string, dir string) {
-	viper.SetConfigName(filename)
-	viper.SetConfigType(config_type)
-	viper.AddConfigPath(dir)
+func setupConfig(configFile string) {
+	viper.SetConfigFile(configFile)
 
 	if err := viper.ReadInConfig(); err != nil {
-		errPrefix := color.Red("error:")
-
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			fmt.Printf(
-				"%s config file not found: %s%s.%s\n",
-				errPrefix, dir, filename, config_type,
-			)
-		} else {
-			fmt.Println(errPrefix + " read config file error")
-		}
+		fmt.Println(color.PrefixError, err)
 		panic(err)
 	}
+	fmt.Println(color.PrefixInfo, "using config file", viper.ConfigFileUsed())
 
 	unmarshalConfig()
 }

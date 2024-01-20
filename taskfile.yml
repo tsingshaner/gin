@@ -44,7 +44,7 @@ tasks:
   run:
     summary: 启动服务
     cmds:
-      - go run ./cmd/server/main.go
+      - go run ./cmd/server/main.go -c ./config/app.yaml
 
   build:
     cmds:
@@ -59,8 +59,28 @@ tasks:
       - go fmt ./...
       - swag fmt
 
+  migrate:
+    summary: 数据库迁移
+    cmds:
+      - go run ./cmd/migrate/main.go
+
   rsa:
     summary: 生成 RSA 密钥对用于 JWT
     cmds:
       - openssl genpkey -algorithm RSA -out ./private_key.pem -pkeyopt rsa_keygen_bits:2048
       - openssl rsa -pubout -in ./private_key.pem -out ./public_key.pem
+
+  test:
+    summary: 运行测试
+    cmds:
+      - go test -v ./...
+
+  cover:
+    summary: 生成测试覆盖率报告
+    cmds:
+      - cmd: powershell New-Item -ItemType Directory -Force -Path ./coverage
+        platforms: [windows]
+      - cmd: mkdir -p ./coverage
+        platforms: [linux, darwin]
+      - go test -coverprofile=./coverage/coverage.out ./...
+      - go tool cover -html=./coverage/coverage.out -o ./coverage/coverage.html

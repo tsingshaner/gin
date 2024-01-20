@@ -55,7 +55,7 @@ func Error(msg ...any) {
 }
 
 func NewLogger(prefix string) *log.Logger {
-	return log.New(os.Stdout, prefix + " ", 0)
+	return log.New(os.Stdout, prefix+" ", 0)
 }
 
 func SetLevel(l int) {

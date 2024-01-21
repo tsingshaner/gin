@@ -3,18 +3,17 @@ package middleware
 import (
 	"errors"
 	"fmt"
-	"net/http"
 	"reflect"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/lab-online/pkg/color"
-	"github.com/lab-online/pkg/constant"
+	"github.com/lab-online/pkg/resp"
 	"github.com/lab-online/pkg/shared"
 )
 
-// Todo interface{} 约束为结构体指针
+// ValidatorOptions Todo interface{} 约束为结构体指针
 type ValidatorOptions struct {
 	BodyKey string
 	Body    any
@@ -104,16 +103,9 @@ func handleValidatorError(c *gin.Context, err error) {
 			key := namespaceToLowerCase(e.StructNamespace())
 			errMsg[key] = fmt.Sprintf("validate failed: %s", e.ActualTag())
 		}
-
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"code": constant.VALIDATE_ERROR,
-			"msg":  errMsg,
-		})
+		resp.BadRequest(c, resp.CodeValidateError, errMsg)
 	} else {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"code": constant.VALIDATE_ERROR,
-			"msg":  err.Error(),
-		})
+		resp.BadRequest(c, resp.CodeValidateError, err.Error())
 	}
 }
 

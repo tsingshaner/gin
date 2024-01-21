@@ -1,15 +1,10 @@
 package middleware
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
-	"github.com/lab-online/pkg/constant"
+	"github.com/lab-online/pkg/resp"
 )
 
 func NotFound(c *gin.Context) {
-	c.JSON(http.StatusNotFound, gin.H{
-		"code":    constant.NOT_FOUND,
-		"message": constant.CodeMsg[constant.NOT_FOUND],
-	})
+	resp.NotFound(c, resp.CodeNotFound, "route not found, please check your request url")
 }

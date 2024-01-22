@@ -23,11 +23,14 @@ jobs:
       - name: Install swag
         run: go install github.com/swaggo/swag/cmd/swag@latest
 
+      - name: Install task
+        run: go install github.com/go-task/task/v3/cmd/task@latest
+
       - name: Install Dependencies
-        run: go mod download
+        run: task install
 
       - name: Open API
-        run: swag init -g ./cmd/server/main.go -o ./api/open-api
+        run: task docs
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

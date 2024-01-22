@@ -11,6 +11,7 @@ type ServerConfig struct {
 	Mode          string // gin mode
 	EnableOpenAPI bool   // enable open api
 	OpenAPIRoute  string
+	APIMarkdown   string
 }
 
 var Server ServerConfig
@@ -20,7 +21,8 @@ func setupServerConfig() {
 	Server.Host = "127.0.0.1"
 	Server.Port = 8080
 	Server.EnableOpenAPI = false
-	Server.OpenAPIRoute = "/open-api/*any"
+	Server.OpenAPIRoute = "/open-api"
+	Server.APIMarkdown = "./api/open-api"
 	requireConfig("server.mode")
 	if err := viper.UnmarshalKey("server", &Server); err != nil {
 		panic(err)

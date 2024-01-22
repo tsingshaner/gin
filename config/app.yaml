@@ -6,6 +6,7 @@ server:
   mode: debug
   enableOpenAPI: true
   openAPIRoute: /open-api
+  apiMarkdown: ./api/open-api
 cors:
   allowHeaders: ["*"]
   allowMethods: [GET, POST, PUT, PATCH, DELETE, OPTIONS]

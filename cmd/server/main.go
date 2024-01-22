@@ -22,18 +22,19 @@ import (
 //	@title			在线实验平台
 //	@version		1.0
 //	@description	在线实验平台 API 文档
+//	@description.markdown
 //	@termsOfService	http://swagger.io/terms/
 
-//	@host		localhost:4936
-//	@BasePath	/api/v1
+//	@securityDefinitions.apikey	BearerToken
+//	@in							header
+//	@name						Authorization
+//	@Security					BearerToken
 
 //	@contact.name	Issues
 //	@contact.url	http://github.com/Jon-a-than/gin-template/issues
 
 //	@license.name	MIT
 //	@license.url	https://github.com/Jon-a-than/gin-template/blob/main/LICENSE
-
-//	@securityDefinitions.basic	BasicAuth
 
 // @externalDocs.description	ApiFox
 // @externalDocs.url			https://apifox.com/apidoc/shared-3e844af7-e01f-4a3a-a44d-9b395189d4d5

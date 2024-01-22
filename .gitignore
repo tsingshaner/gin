@@ -6,7 +6,8 @@
 target
 logs
 coverage
-api/open-api/swagger.json
+api/open-api/*
+!api/open-api/api.md
 
 *.log
 *.db

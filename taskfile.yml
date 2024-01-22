@@ -15,9 +15,12 @@ tasks:
       - go mod download
 
   docs:
+    vars:
+      DOCS_PATH: "./api/open-api"
     summary: 更新 swagger 文档
     cmds:
-      - swag init -g ./cmd/server/main.go -o ./api/open-api
+      - go run ./cmd/gen/main.go
+      - swag init -g ./cmd/server/main.go -o {{.DOCS_PATH}} --md {{.DOCS_PATH}}
 
   dev:
     summary: 监听文件变化自动重启
@@ -44,6 +47,8 @@ tasks:
   run:
     summary: 启动服务
     cmds:
+      - task: fmt
+      - task: docs
       - go run ./cmd/server/main.go -c ./config/app.yaml
 
   build:

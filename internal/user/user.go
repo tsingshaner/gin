@@ -2,21 +2,24 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+
+	"github.com/lab-online/pkg/jwt"
+	"github.com/lab-online/pkg/middleware"
+
 	"github.com/lab-online/internal/user/domain"
 	"github.com/lab-online/internal/user/handler"
 	"github.com/lab-online/internal/user/infra/repository"
 	"github.com/lab-online/internal/user/interface/http"
-	"github.com/lab-online/pkg/middleware"
-	"gorm.io/gorm"
 )
 
 type UserRoutes struct {
 	http.UserHandler
 }
 
-func NewUserRoutes(db *gorm.DB) *UserRoutes {
+func NewUserRoutes(db *gorm.DB, jwt jwt.JWTAction) *UserRoutes {
 	r := repository.NewRepository(db)
-	d := domain.NewDomain(r)
+	d := domain.NewDomain(r, jwt)
 	h := handler.NewHandler(d)
 
 	return &UserRoutes{h}

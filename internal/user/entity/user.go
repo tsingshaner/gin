@@ -15,3 +15,13 @@ type User struct {
 	Updated  time.Time    `json:"updated"`
 	Deleted  sql.NullTime `json:"deleted"`
 }
+
+type UserEntity interface {
+	GetUserID() string
+	GetUsername() string
+	GetPassword() string
+	GetRole() uint8
+
+	HashPassword() error
+	ComparePassword(password string) bool
+}

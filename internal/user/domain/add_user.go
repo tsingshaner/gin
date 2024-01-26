@@ -1,21 +1,19 @@
 package domain
 
 import (
+	"github.com/lab-online/internal/user/constant"
 	"github.com/lab-online/internal/user/entity"
-	errors "github.com/lab-online/internal/user/error"
 )
 
-func (d *Domain) AddUser(user *entity.User) error {
-	if exist, err := d.repository.CheckUserExists(user.UserID); err != nil {
-		return err
+func (d *Domain) AddUser(user entity.UserEntity) error {
+	if exist, err := d.repository.CheckUserExists(user.GetUserID()); err != nil {
+		return newCustomError(constant.DB_ERROR)
 	} else if exist {
-		return errors.New(errors.USER_ALREADY_EXISTS)
+		return newCustomError(constant.USER_ALREADY_EXISTS)
 	}
 
-	if hashedPassword, err := d.HashPassword(user.Password); err != nil {
-		return errors.New(errors.USER_PASSWORD_EMPTY)
-	} else {
-		user.Password = hashedPassword
+	if err := user.HashPassword(); err != nil {
+		return newCustomError(constant.PASSWORD_HASH_ERROR)
 	}
 
 	return d.repository.InsertUser(user)

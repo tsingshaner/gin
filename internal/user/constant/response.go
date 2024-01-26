@@ -20,11 +20,15 @@ const (
 
 const (
 	DB_ERROR = resp.CodeServerError + domainCode + iota
+	PASSWORD_HASH_ERROR
 )
 
 var ErrorMessage = map[int]string{
 	USER_ALREADY_EXISTS: "user already exists",
 	USER_PASSWORD_EMPTY: "user password empty",
+
+	DB_ERROR:            "server database error",
+	PASSWORD_HASH_ERROR: "password hash error",
 }
 
 var StatusMap = map[int]int{
@@ -40,7 +44,8 @@ func GetCodeMap() gen.CodeMap {
 			USER_ALREADY_EXISTS: "用户已存在",
 			USER_PASSWORD_EMPTY: "用户密码为空",
 
-			DB_ERROR: "服务端数据库链接错误",
+			DB_ERROR:            "服务端数据库链接错误",
+			PASSWORD_HASH_ERROR: "服务端密码加密错误",
 		},
 	}
 }

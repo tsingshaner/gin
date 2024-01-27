@@ -4,62 +4,54 @@ import (
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
+	"errors"
 	"os"
 
-	"github.com/lab-online/config"
 	"github.com/lab-online/pkg/color"
 )
 
-type RSAKey struct {
-	PublicKey  *rsa.PublicKey
-	PrivateKey *rsa.PrivateKey
+func (*JsonWebToken) LoadRSA(publicKeyPath string, privateKeyPath string) (*RSAKey, error) {
+	rsaKey := &RSAKey{}
+
+	if pub, err := getKey[rsa.PublicKey](publicKeyPath, x509.ParsePKIXPublicKey); err != nil {
+		return nil, err
+	} else {
+		rsaKey.PublicKey = pub
+		jwtLogger(color.ColorGreen, "RSA public key load success")
+	}
+
+	if pri, err := getKey[rsa.PrivateKey](privateKeyPath, x509.ParsePKCS8PrivateKey); err != nil {
+		return nil, err
+	} else {
+		rsaKey.PrivateKey = pri
+		jwtLogger(color.ColorGreen, "RSA private key load success")
+	}
+
+	return rsaKey, nil
 }
 
-var RSA RSAKey
-
-func init() {
-	if pubKey, err := os.ReadFile(config.JWT.PublicKeyPath); err != nil {
-		jwtError(err, "JWT public key load failed: ", config.JWT.PublicKeyPath)
+func getKey[T any](path string, parser func([]byte) (any, error)) (*T, error) {
+	if file, err := os.ReadFile(path); err != nil {
+		jwtError("pem file load failed: ", path)
+		return nil, err
 	} else {
-		parsePublicKey(pubKey)
-	}
-
-	if priKey, err := os.ReadFile(config.JWT.PrivateKeyPath); err != nil {
-		jwtError(err, "JWT private key load failed: ", config.JWT.PrivateKeyPath)
-	} else {
-		parsePrivateKey(priKey)
-	}
-
-	jwtLogger(color.ColorGreen, "JWT RSA key load success")
-}
-
-func parsePublicKey(pubKey []byte) {
-	block, _ := pem.Decode(pubKey)
-	if block == nil {
-		panic("jwt failed to parse PEM block containing the public key")
-	}
-	if pub, err := x509.ParsePKIXPublicKey(block.Bytes); err != nil {
-		jwtError(err, "parse rsa public key failed")
-	} else {
-		RSA.PublicKey = pub.(*rsa.PublicKey)
-	}
-}
-
-func parsePrivateKey(priKey []byte) {
-	block, _ := pem.Decode(priKey)
-	if block == nil {
-		panic("jwt failed to parse PEM block containing the private key")
-	}
-	if pri, err := x509.ParsePKCS8PrivateKey(block.Bytes); err != nil {
-		jwtError(err, "parse rsa private key failed")
-	} else {
-		RSA.PrivateKey = pri.(*rsa.PrivateKey)
+		block, _ := pem.Decode(file)
+		if block == nil {
+			err := errors.New("jwt failed to parse PEM block containing the key")
+			jwtError(err.Error())
+			return nil, err
+		}
+		if pub, err := parser(block.Bytes); err != nil {
+			jwtError("parse rsa key failed")
+			return nil, err
+		} else {
+			return pub.(*T), nil
+		}
 	}
 }
 
-func jwtError(err error, msg ...any) {
+func jwtError(msg ...any) {
 	jwtLogger(color.ColorRed, msg)
-	panic(err)
 }
 
 func jwtLogger(style int, msg ...any) {

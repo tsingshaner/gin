@@ -2,6 +2,7 @@ package app
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/lab-online/pkg/jwt"
 	"gorm.io/gorm"
 )
 
@@ -11,9 +12,10 @@ type Server interface {
 }
 
 type AppContext struct {
-	DB *gorm.DB
+	DB  *gorm.DB
+	jwt jwt.JWTAction
 }
 
-func NewApp(db *gorm.DB) Server {
-	return &AppContext{db}
+func NewApp(db *gorm.DB, jwt jwt.JWTAction) Server {
+	return &AppContext{db, jwt}
 }

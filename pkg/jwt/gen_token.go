@@ -7,7 +7,7 @@ import (
 	"github.com/lab-online/config"
 )
 
-func GenToken(userID string, role uint8) string {
+func (j *JsonWebToken) GenToken(userID string, role uint8) (string, error) {
 	now := time.Now()
 
 	claims := &Claims{
@@ -20,10 +20,5 @@ func GenToken(userID string, role uint8) string {
 		},
 	}
 
-	token, err := jwt.NewWithClaims(jwt.SigningMethodRS256, claims).SignedString(RSA.PrivateKey)
-	if err != nil {
-		panic(err)
-	}
-
-	return token
+	return jwt.NewWithClaims(jwt.SigningMethodRS256, claims).SignedString(j.RSA.PrivateKey)
 }

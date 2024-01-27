@@ -1,5 +1,5 @@
 package jwt
 
-func ParseToken(password string) string {
-	return password
+func (*JsonWebToken) ParseToken(password string) (*Claims, error) {
+	return &Claims{}, nil
 }

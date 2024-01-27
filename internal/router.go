@@ -9,7 +9,7 @@ import (
 func (app *AppContext) RoutesRegister(r *gin.RouterGroup) {
 	v1 := r.Group("/v1")
 
-	userRoutes := user.NewUserRoutes(app.DB)
+	userRoutes := user.NewUserRoutes(app.DB, app.jwt)
 
 	router.Register(v1, &[]router.Router{
 		userRoutes.Register,

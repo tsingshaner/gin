@@ -29,6 +29,15 @@ jobs:
       - name: Install Dependencies
         run: task install
 
+      - name: Copy RSA keys
+        shell: bash
+        env:
+          RSA_PRIVATE_KEY: ${{ secrets.RSA_PRIVATE_KEY }}
+          RSA_PUBLIC_KEY: ${{ secrets.RSA_PUBLIC_KEY }}
+        run: |
+          echo "$RSA_PRIVATE_KEY" > ./private_key.pem
+          echo "$RSA_PUBLIC_KEY }}" > ./public_key.pem
+
       - name: Open API
         run: task docs
 

@@ -4,5 +4,6 @@ import "github.com/lab-online/internal/user/entity"
 
 type UserRepository interface {
 	CheckUserExists(string) (bool, error)
-	InsertUser(userEntity entity.UserEntity) error
+	InsertUser(entity.UserEntity) error
+	FindByUserID(string) (entity.UserEntity, error)
 }

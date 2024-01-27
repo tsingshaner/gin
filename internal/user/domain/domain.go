@@ -9,7 +9,7 @@ import (
 
 type UserDomain interface {
 	AddUser(entity.UserEntity) error
-	Login(*entity.User) (string, error)
+	Login(entity.UserEntity) (string, error)
 }
 
 type Domain struct {

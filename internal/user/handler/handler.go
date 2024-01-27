@@ -2,17 +2,19 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
+
+	errors "github.com/lab-online/pkg/error"
+
 	"github.com/lab-online/internal/user/constant"
 	"github.com/lab-online/internal/user/domain"
-	"github.com/lab-online/internal/user/interface/http"
-	errors "github.com/lab-online/pkg/error"
+	"github.com/lab-online/internal/user/interface/rest"
 )
 
 type Handler struct {
 	domain domain.UserDomain
 }
 
-func NewHandler(domain domain.UserDomain) http.UserHandler {
+func NewHandler(domain domain.UserDomain) rest.UserHandler {
 	return &Handler{
 		domain: domain,
 	}

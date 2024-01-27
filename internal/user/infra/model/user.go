@@ -1,12 +1,13 @@
 package model
 
 import (
-	baseModel "github.com/lab-online/pkg/model"
+	"github.com/lab-online/pkg/model"
 )
 
 type User struct {
-	baseModel.BaseModel
+	model.BaseModel
 	UserID   string `gorm:"unique"`
+	Username string
 	Password string
-	Role     int8
+	Role     uint8
 }

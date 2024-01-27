@@ -5,16 +5,15 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/lab-online/pkg/jwt"
-	"github.com/lab-online/pkg/middleware"
 
 	"github.com/lab-online/internal/user/domain"
 	"github.com/lab-online/internal/user/handler"
 	"github.com/lab-online/internal/user/infra/repository"
-	"github.com/lab-online/internal/user/interface/http"
+	"github.com/lab-online/internal/user/interface/rest"
 )
 
 type UserRoutes struct {
-	http.UserHandler
+	rest.UserHandler
 }
 
 func NewUserRoutes(db *gorm.DB, jwt jwt.JWTAction) *UserRoutes {
@@ -32,7 +31,7 @@ func (u *UserRoutes) Register(r *gin.RouterGroup) {
 	user.GET("", u.GetUserList)
 	user.GET(":id", u.GetUserProfile)
 	user.PATCH(":id", u.UpdateUser)
-	user.POST("", middleware.Validator(handler.RegisterReq), u.UserHandler.Register)
-	user.POST("login", u.Login)
+	user.POST("", handler.RegisterValidator, u.UserHandler.Register)
+	user.POST("login", handler.LoginValidator, u.Login)
 	user.PUT(":id", u.UpdateUser)
 }

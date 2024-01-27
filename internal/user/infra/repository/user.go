@@ -4,9 +4,10 @@ import (
 	"database/sql"
 	"log/slog"
 
-	"github.com/lab-online/internal/user/entity"
-	"github.com/lab-online/pkg/model"
 	"gorm.io/gorm"
+
+	"github.com/lab-online/internal/user/entity"
+	"github.com/lab-online/internal/user/infra/model"
 )
 
 func (r *Repository) user() *gorm.DB {

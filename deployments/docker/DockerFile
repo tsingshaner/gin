@@ -1,0 +1,22 @@
+# TODO 配置待调试
+FROM golang:1.21 AS build
+WORKDIR /app
+
+RUN go install github.com/go-task/task/v3/cmd/task@latest
+
+ADD taskfile.yml ./
+ADD go.mod go.sum ./
+RUN task install
+
+ADD ./internal ./pkg ./cmd ./config ./api ./
+RUN task build
+
+FROM alpine:latest
+WORKDIR /app
+
+COPY --from=build /app/config/app.yaml ./
+COPY --from=build /app/main ./
+
+ADD ./public_key.pem ./private_key.pem ./
+
+CMD ["./main", "-c", "./app.yml"]

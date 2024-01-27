@@ -7,16 +7,16 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	openAPI "github.com/lab-online/api/open-api"
+	"gorm.io/gorm"
+
 	"github.com/lab-online/config"
 	app "github.com/lab-online/internal"
 	"github.com/lab-online/pkg/color"
 	"github.com/lab-online/pkg/database"
+	"github.com/lab-online/pkg/jwt"
 	"github.com/lab-online/pkg/logger"
 	"github.com/lab-online/pkg/middleware"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
-	"gorm.io/gorm"
+	"github.com/lab-online/pkg/openapi"
 )
 
 //	@title			在线实验平台
@@ -44,14 +44,21 @@ func main() {
 	serverAddr := fmt.Sprintf("%s:%d", config.Server.Host, config.Server.Port)
 
 	bindGlobalMiddleware(engine)
-	serverApp := app.NewApp(db)
+	jsonWebToken, _ := jwt.NewJWT(config.JWT.PublicKeyPath, config.JWT.PrivateKeyPath)
+	serverApp := app.NewApp(db, jsonWebToken)
 
 	if err := serverApp.Migrate(); err != nil {
 		logger.Warn("failed to migrate database")
 		logger.Warn(err.Error())
 	}
 
-	setupOpenAPI(engine, serverAddr, config.Server.Prefix)
+	if config.Server.EnableOpenAPI {
+		openapi.Setup(engine, &openapi.Config{
+			DOCSPrefix: config.Server.OpenAPIRoute,
+			ServerAddr: serverAddr,
+			BasePath:   config.Server.Prefix,
+		})
+	}
 	serverApp.RoutesRegister(engine.Group(config.Server.Prefix))
 
 	server := &http.Server{
@@ -95,25 +102,5 @@ func bindGlobalMiddleware(engine *gin.Engine) {
 		}),
 		middleware.CORS(corsConfig),
 		middleware.Recover(),
-	)
-}
-
-func setupOpenAPI(engine *gin.Engine, serverAddr string, BasePath string) {
-	if !config.Server.EnableOpenAPI {
-		return
-	}
-
-	logger.Info(
-		"open api is enabled",
-		color.Style(
-			fmt.Sprintf("http://%s%s/index.html", serverAddr, config.Server.OpenAPIRoute),
-			color.ColorBlue, color.FontUnderline,
-		),
-	)
-	openAPI.SwaggerInfo.Host = serverAddr
-	openAPI.SwaggerInfo.BasePath = config.Server.Prefix
-	engine.GET(
-		fmt.Sprintf("%s/*any", config.Server.OpenAPIRoute),
-		ginSwagger.WrapHandler(swaggerFiles.Handler),
 	)
 }

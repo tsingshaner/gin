@@ -6,10 +6,10 @@ import (
 	"github.com/lab-online/pkg/router"
 )
 
-func (app *AppContext) RoutesRegister(r *gin.RouterGroup) {
+func (app *Context) RoutesRegister(r *gin.RouterGroup) {
 	v1 := r.Group("/v1")
 
-	userRoutes := user.NewUserRoutes(app.DB, app.jwt)
+	userRoutes := user.NewUserRoutes(app.DB, app.jwt, app.auth)
 
 	router.Register(v1, &[]router.Router{
 		userRoutes.Register,

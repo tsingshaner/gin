@@ -11,7 +11,7 @@ import (
 func main() {
 	db := database.ConnectDB(config.Database.Postgres, &gorm.Config{})
 
-	server := &app.AppContext{DB: db}
+	server := &app.Context{DB: db}
 
 	if err := server.Migrate(); err != nil {
 		logger.Error("migrate database failed")

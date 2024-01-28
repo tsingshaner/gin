@@ -25,10 +25,9 @@ import (
 //	@description.markdown
 //	@termsOfService	http://swagger.io/terms/
 
-//	@securityDefinitions.apikey	BearerToken
+//	@securityDefinitions.apikey	bearer
 //	@in							header
 //	@name						Authorization
-//	@Security					BearerToken
 
 //	@contact.name	Issues
 //	@contact.url	http://github.com/Jon-a-than/gin-template/issues
@@ -44,8 +43,8 @@ func main() {
 	serverAddr := fmt.Sprintf("%s:%d", config.Server.Host, config.Server.Port)
 
 	bindGlobalMiddleware(engine)
-	jsonWebToken, _ := jwt.NewJWT(config.JWT.PublicKeyPath, config.JWT.PrivateKeyPath)
-	serverApp := app.NewApp(db, jsonWebToken)
+	jsonWebToken, _ := jwt.New(config.JWT)
+	serverApp := app.New(db, jsonWebToken)
 
 	if err := serverApp.Migrate(); err != nil {
 		logger.Warn("failed to migrate database")
@@ -73,8 +72,7 @@ func main() {
 		"server will listening on",
 		color.Style(server.Addr, color.ColorBlue, color.FontUnderline),
 	)
-	err := server.ListenAndServe()
-	if err != nil {
+	if err := server.ListenAndServe(); err != nil {
 		logger.Error(err.Error())
 	}
 }

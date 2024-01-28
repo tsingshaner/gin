@@ -12,6 +12,7 @@ const domainCode = 100
 const (
 	SUCCESS_REGISTER = resp.CodeSuccess + domainCode + iota
 	SUCCESS_LOGIN
+	GET_PROFILE_SUCCESS
 )
 
 const (
@@ -66,6 +67,9 @@ func GetCodeMap() gen.CodeMap {
 			DB_ERROR:            "服务端数据库链接错误",
 			PASSWORD_HASH_ERROR: "服务端密码加密错误",
 			TOKEN_GEN_ERROR:     "服务端token生成错误",
+		},
+		"GetProfile": {
+			GET_PROFILE_SUCCESS: "获取用户信息成功",
 		},
 	}
 }

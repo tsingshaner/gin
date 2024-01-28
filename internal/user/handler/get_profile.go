@@ -32,7 +32,7 @@ type GetUserProfileRespBody struct {
 //	@Security				bearer
 //	@x-apifox-status		"testing"
 //	@Router					/v1/user/profile [get]
-func (h *Handler) GetUserProfile(c *gin.Context) {
+func (h *Handler) GetProfile(c *gin.Context) {
 	userInfo := c.MustGet(auth.KeyAuth).(*auth.AuthInfo)
 
 	userEntity := entity.NewUserEntity(entity.WithUserID(userInfo.UserID))
@@ -40,7 +40,7 @@ func (h *Handler) GetUserProfile(c *gin.Context) {
 	if user, err := h.domain.GetUser(userEntity); err != nil {
 		handleError(c, err)
 	} else {
-		resp.Success(c, constant.GET_PROFILE_SUCCESS, &GetUserProfileRespData{
+		resp.Success(c, constant.GetProfileSuccess, &GetUserProfileRespData{
 			UserID:   user.GetUserID(),
 			Username: user.GetUsername(),
 			Role:     user.GetRole(),

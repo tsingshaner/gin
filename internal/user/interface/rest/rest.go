@@ -6,7 +6,7 @@ type UserHandler interface {
 	Register(*gin.Context)
 
 	DeleteUser(*gin.Context)
-	GetUserProfile(*gin.Context)
+	GetProfile(*gin.Context)
 	GetUserList(*gin.Context)
 	Login(*gin.Context)
 	SearchUser(*gin.Context)

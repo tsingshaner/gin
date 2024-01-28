@@ -7,13 +7,13 @@ import (
 
 func (d *Domain) AddUser(user entity.UserEntity) error {
 	if exist, err := d.repository.CheckUserExists(user.GetUserID()); err != nil {
-		return newCustomError(constant.DB_ERROR)
+		return newCustomError(constant.DBError)
 	} else if exist {
-		return newCustomError(constant.USER_ALREADY_EXISTS)
+		return newCustomError(constant.UserAlreadyExists)
 	}
 
 	if err := user.HashPassword(); err != nil {
-		return newCustomError(constant.PASSWORD_HASH_ERROR)
+		return newCustomError(constant.PasswordHashError)
 	}
 
 	return d.repository.InsertUser(user)

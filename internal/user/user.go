@@ -13,27 +13,36 @@ import (
 	"github.com/lab-online/internal/user/interface/rest"
 )
 
-type UserRoutes struct {
+type Route struct {
 	rest.UserHandler
 	auth auth.Middleware
 }
 
-func NewUserRoutes(db *gorm.DB, jwt jwt.JWTAction, auth auth.Middleware) *UserRoutes {
+func NewUserRoutes(db *gorm.DB, jwt jwt.JWTAction, auth auth.Middleware) *Route {
 	r := repository.NewRepository(db)
 	d := domain.NewDomain(r, jwt)
 	h := handler.NewHandler(d)
 
-	return &UserRoutes{h, auth}
+	return &Route{h, auth}
 }
 
-func (u *UserRoutes) Register(r *gin.RouterGroup) {
-	user := r.Group("/user/")
+func (r *Route) Register(router *gin.RouterGroup) {
+	user := router.Group("/user/")
 
-	user.DELETE(":id", u.DeleteUser)
-	user.GET("", u.GetUserList)
-	user.GET("profile", u.auth([]auth.Role{auth.RoleNone}), u.GetUserProfile)
-	user.PATCH(":id", u.UpdateUser)
-	user.POST("", handler.RegisterValidator, u.UserHandler.Register)
-	user.POST("login", handler.LoginValidator, u.Login)
-	user.PUT(":id", u.UpdateUser)
+	user.DELETE(":id", r.DeleteUser)
+	user.GET("", r.GetUserList)
+	user.GET(
+		"profile", r.auth([]auth.Role{auth.RoleNone}),
+		r.GetProfile,
+	)
+	user.PATCH(
+		":id", r.auth([]auth.Role{auth.RoleNone}),
+		r.UpdateUser,
+	)
+	user.POST(
+		"", r.auth([]auth.Role{auth.RoleTeacher}),
+		handler.RegisterValidator, r.UserHandler.Register,
+	)
+	user.POST("login", handler.LoginValidator, r.Login)
+	user.PUT(":id", r.UpdateUser)
 }

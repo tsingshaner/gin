@@ -56,6 +56,6 @@ func (h *Handler) Login(c *gin.Context) {
 		handleError(c, err)
 		return
 	} else {
-		resp.Success(c, constant.SUCCESS_LOGIN, &AccessToken{token})
+		resp.Success(c, constant.SuccessLogin, &AccessToken{token})
 	}
 }

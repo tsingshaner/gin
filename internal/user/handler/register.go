@@ -51,5 +51,5 @@ func (h *Handler) Register(c *gin.Context) {
 		return
 	}
 
-	resp.Created[any](c, constant.SUCCESS_REGISTER)
+	resp.Created[any](c, constant.SuccessRegister)
 }

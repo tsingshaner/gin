@@ -3,12 +3,13 @@ package domain
 import (
 	"github.com/lab-online/internal/user/constant"
 	"github.com/lab-online/internal/user/entity"
-	errors "github.com/lab-online/pkg/error"
+	"github.com/lab-online/pkg/errors"
 	"github.com/lab-online/pkg/jwt"
 )
 
 type UserDomain interface {
 	AddUser(entity.UserEntity) error
+	GetUser(entity.UserEntity) (entity.UserEntity, error)
 	Login(entity.UserEntity) (string, error)
 }
 
@@ -22,5 +23,5 @@ func NewDomain(repository UserRepository, jwt jwt.JWTAction) UserDomain {
 }
 
 func newCustomError(code int) *errors.Error {
-	return errors.New(code, constant.ErrorMessage)
+	return errors.New(code, constant.ErrorMessage[code])
 }

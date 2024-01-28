@@ -3,7 +3,7 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 
-	errors "github.com/lab-online/pkg/error"
+	"github.com/lab-online/pkg/errors"
 
 	"github.com/lab-online/internal/user/constant"
 	"github.com/lab-online/internal/user/domain"

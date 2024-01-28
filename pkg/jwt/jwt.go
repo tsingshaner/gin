@@ -4,6 +4,7 @@ import (
 	"crypto/rsa"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/lab-online/pkg/color"
 )
 
 type Config struct {
@@ -11,19 +12,19 @@ type Config struct {
 	PrivateKeyPath string
 
 	Issuer string
+	Expire int8
 }
 
 type Claims struct {
-	UserID string `json:"user_id"`
+	UserID string `json:"uid"`
 	Role   uint8  `json:"role"`
-	Scoped string `json:"scoped"`
 	jwt.RegisteredClaims
 }
 
 type JWTAction interface {
-	LoadRSA(publicKeyPath string, privateKeyPath string) (*RSAKey, error)
+	LoadRSA() error
 	GenToken(userID string, role uint8) (string, error)
-	ParseToken(tokenString string) (*Claims, error)
+	ParseToken(token string) (*Claims, error)
 }
 
 type RSAKey struct {
@@ -32,16 +33,30 @@ type RSAKey struct {
 }
 
 type JsonWebToken struct {
-	RSA *RSAKey
+	config *Config
+	rsa    *RSAKey
 }
 
-func NewJWT(publicKeyPath string, privateKeyPath string) (JWTAction, error) {
-	jsonWebToken := &JsonWebToken{}
-	if rsa, err := jsonWebToken.LoadRSA(publicKeyPath, privateKeyPath); err != nil {
+func New(config *Config) (JWTAction, error) {
+	jwtInfo("JWT Issuer", config.Issuer)
+	jwtInfo("JWT Expire", config.Expire, "hours")
+
+	jsonWebToken := &JsonWebToken{config, &RSAKey{}}
+	if err := jsonWebToken.LoadRSA(); err != nil {
 		return nil, err
-	} else {
-		jsonWebToken.RSA = rsa
 	}
 
 	return jsonWebToken, nil
+}
+
+func jwtInfo(msg ...any) {
+	jwtLogger(color.ColorGreen, msg...)
+}
+
+func jwtError(msg ...any) {
+	jwtLogger(color.ColorRed, msg...)
+}
+
+func jwtLogger(style int, msg ...any) {
+	color.Log("jwt", style, msg)
 }

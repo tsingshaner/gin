@@ -42,6 +42,6 @@ database:
 jwt:
   issuer: "mimo"
   # 小时
-  expiration: 72
+  expire: 72
   publicKeyPath: ./public_key.pem
   privateKeyPath: ./private_key.pem

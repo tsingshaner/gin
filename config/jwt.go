@@ -1,15 +1,11 @@
 package config
 
-import "github.com/spf13/viper"
+import (
+	"github.com/lab-online/pkg/jwt"
+	"github.com/spf13/viper"
+)
 
-type JsonWebTokenConfig struct {
-	Issuer         string // jwt issuer
-	Expire         int    // jwt expire
-	PublicKeyPath  string // jwt public key path
-	PrivateKeyPath string // jwt private key path
-}
-
-var JWT JsonWebTokenConfig
+var JWT = &jwt.Config{}
 
 func setupJWTConfig() {
 	requireConfig("jwt.issuer")

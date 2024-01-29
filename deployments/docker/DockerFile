@@ -15,6 +15,13 @@ RUN task build:alpine
 FROM alpine:latest
 WORKDIR /app
 
+ENV TZ=Asia/Shanghai
+RUN apk update \
+    && apk add tzdata \
+    && echo "${TZ}" > /etc/timezone \
+    && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
+    && rm /var/cache/apk/*
+
 COPY --from=build /app/config/app.yaml ./config/
 COPY --from=build /app/target/main ./app
 

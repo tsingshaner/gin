@@ -43,5 +43,5 @@ jwt:
   issuer: "lab"
   # 小时
   expire: 72
-  publicKeyPath: ./public_key.pem
-  privateKeyPath: ./private_key.pem
+  publicKeyPath: ./config/public_key.pem
+  privateKeyPath: ./config/private_key.pem

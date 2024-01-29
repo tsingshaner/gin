@@ -32,7 +32,16 @@ task install
 task rsa
 ```
 
-若仅用于开发环境，且不想安装 `openssl`，可使用在线生成工具生成密钥对，将私钥保存至根目录 `private_key.pem`，将公钥保存至根目录 `public_key.pem`。路径可在 `config/app.yaml` 中修改
+若仅用于开发环境，且不想安装 `openssl`，可使用在线生成工具生成密钥对，将私钥保存至 `config` 目录 `private_key.pem`，将公钥保存至 `config` 目录 `public_key.pem`。路径可在 `config/app.yaml` 中修改
+```
+/config
+  app.yaml
+  config.go
+  private_key.pem
+  public_key.pem
+  // ...
+```
+
 
 ❗`docker compose` 配置文件挂载在 `deployments/docker/config` 中, 配置文件路径如下：
 

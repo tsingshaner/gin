@@ -2,7 +2,7 @@ server:
   prefix: /api
   host: 127.0.0.1
   port: 4936
-    # debug, release
+  # debug, release
   mode: debug
   enableOpenAPI: true
   openAPIRoute: /open-api
@@ -40,7 +40,7 @@ database:
   # 自行修改
   redis: "redis://localhost:6379/0"
 jwt:
-  issuer: "mimo"
+  issuer: "lab"
   # 小时
   expire: 72
   publicKeyPath: ./public_key.pem

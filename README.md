@@ -34,36 +34,55 @@ task rsa
 
 若仅用于开发环境，且不想安装 `openssl`，可使用在线生成工具生成密钥对，将私钥保存至根目录 `private_key.pem`，将公钥保存至根目录 `public_key.pem`。路径可在 `config/app.yaml` 中修改
 
+❗`docker compose` 配置文件挂载在 `deployments/docker/config` 中, 配置文件路径如下：
+
+```
+/deployments/docker/config
+  app.yaml
+  private_key.pem
+  public_key.pem
+```
+
 ### 数据库表结构更新
 
 ```bash
 task migrate
 ```
 
-## 开发环境运行
+### 本地开发环境运行
+
+需自行配置 `postgresql` 数据库，配置文件路径为 `config/app.yaml`
+
+若使用 `GoLand` 可以将 `fmt`
 
 ```bash
-task dev # go run + 文件监听
-task run # go run
+task dev # task run + 文件监听
+task run # go run + fmt + docs
 ```
 
-## docker compose 运行
+### docker compose 运行
 
 ```bash
-task docker:up
+task docker:build    # 构建镜像
+task docker:up       # 启动容器
+task docker:rebuild  # 重建镜像并启动容器
 ```
 
-## 编译
+### 本地编译
 
 ```bash
 task build
 ```
 
-## API 文档
+### 部署环境编译(alpine 容器)
 
-使用 `swag` 生成文档信息，使用 `APIFox` 作为文档展示 / 调试工具。
+```bash
+task build:alpine # 用于镜像构建
+```
 
 ### 生成文档
+
+使用 `swag` 生成文档信息，使用 `APIFox` 作为文档展示 / 调试工具。
 
 ```bash
 task docs

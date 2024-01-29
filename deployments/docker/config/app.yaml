@@ -1,0 +1,32 @@
+server:
+  prefix: /api
+  host: 127.0.0.1
+  port: 4936
+  mode: release
+  enableOpenAPI: false
+  openAPIRoute: /open-api
+  apiMarkdown: ./api/open-api
+cors:
+  allowHeaders: ["*"]
+  allowMethods: [GET, POST, PUT, PATCH, DELETE, OPTIONS]
+  allowOrigins: ["https://mimo.qingshaner.com"]
+  allowCredentials: false
+  maxAge: 60
+logger:
+  consoleLevel: 15
+  slogLevel: 4
+  consoleHttp: false
+  httpLevel: 4
+  path: logs
+  filename: app.log
+  maxSize: 50
+  maxBackups: 8
+  maxAge: 7
+database:
+  postgres: "postgres://postgres:123456@postgres:5432/mimo"
+  redis: "redis://localhost:6379/0"
+jwt:
+  issuer: "lab"
+  expire: 24
+  publicKeyPath: ./config/public_key.pem
+  privateKeyPath: ./config/private_key.pem

@@ -6,6 +6,7 @@
 target
 logs
 coverage
+deployments/docker/data
 api/open-api/*
 !api/open-api/api.md
 

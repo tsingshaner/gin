@@ -1,22 +1,22 @@
-# TODO 配置待调试
-FROM golang:1.21 AS build
+FROM golang AS build
 WORKDIR /app
 
 RUN go install github.com/go-task/task/v3/cmd/task@latest
+RUN go install github.com/swaggo/swag/cmd/swag@latest
 
-ADD taskfile.yml ./
-ADD go.mod go.sum ./
+COPY go.mod go.sum ./
+COPY taskfile.yml .
 RUN task install
 
-ADD ./internal ./pkg ./cmd ./config ./api ./
-RUN task build
+COPY . .
+RUN task docs
+RUN task build:alpine
 
 FROM alpine:latest
 WORKDIR /app
 
-COPY --from=build /app/config/app.yaml ./
-COPY --from=build /app/main ./
+COPY --from=build /app/config/app.yaml ./config/
+COPY --from=build /app/target/main ./app
 
-ADD ./public_key.pem ./private_key.pem ./
-
-CMD ["./main", "-c", "./app.yml"]
+CMD ["./app", "-c", "./config/app.yaml"]
+EXPOSE 4936

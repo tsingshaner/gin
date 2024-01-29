@@ -1,1 +1,21 @@
-# TODO 待调试
+.task
+.idea
+.vscode
+.git
+.github
+
+deployments
+target
+logs
+coverage
+api/open-api/*
+!api/open-api/api.md
+
+*.log
+*.db
+
+README.md
+CHANGELOG.md
+.gitignore
+.gitattributes
+.editorconfig

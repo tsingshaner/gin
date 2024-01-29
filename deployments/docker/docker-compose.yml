@@ -1,22 +1,20 @@
-# TODO 配置待调试
-
 version: '3.9'
 services:
   app:
-    build: .
+    build:
+      context: ../..
+      dockerfile: ./deployments/docker/Dockerfile
     ports:
-      - "4936:8080"
+      - 4936:4936
     depends_on:
-      - db
-    environment:
-      - DB_HOST=db
-  db:
-    image: postgres:16
-    environment:
-      - POSTGRES_USER=myuser
-      - POSTGRES_PASSWORD=mypassword
-      - POSTGRES_DB=mydatabase
+      - postgres
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
-volumes:
-  postgres_data:
+      - ./config:/app/config
+      - ./data/logs:/app/logs
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: mimo
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data/

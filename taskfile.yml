@@ -5,6 +5,10 @@ env:
   GO111MODULE: on
   GOPROXY: https://goproxy.cn,direct
 
+vars:
+  TARGET: ./target
+  APP_ENTRY: ./cmd/server/main.go
+
 # 监听文件变化的时间间隔
 interval: 500ms
 
@@ -15,12 +19,12 @@ tasks:
       - go mod download
 
   docs:
+    summary: 更新 swagger 文档
     vars:
       DOCS_PATH: "./api/open-api"
-    summary: 更新 swagger 文档
     cmds:
       - go run ./cmd/gen/main.go
-      - swag init -g ./cmd/server/main.go -o {{.DOCS_PATH}} --md {{.DOCS_PATH}}
+      - swag init -g {{.APP_ENTRY}} -o {{.DOCS_PATH}} --md {{.DOCS_PATH}}
 
   dev:
     summary: 监听文件变化自动重启
@@ -49,14 +53,21 @@ tasks:
     cmds:
       - task: fmt
       - task: docs
-      - go run ./cmd/server/main.go -c ./config/app.yaml
+      - go run {{.APP_ENTRY}} -c ./config/app.yaml
 
   build:
     cmds:
-      - cmd: "go build -o ./target/main ./cmd/server/main.go"
+      - cmd: "go build -o ./target/main {{.APP_ENTRY}}"
         platforms: [linux, darwin]
-      - cmd: "go build -o ./target/main.exe ./cmd/server/main.go"
+      - cmd: "go build -o ./target/main.exe {{.APP_ENTRY}}"
         platforms: [windows]
+
+  build:alpine:
+    env:
+      CGO_ENABLED: 0
+      GOOS: linux
+    cmds:
+      - go build -a -ldflags '-w -s -extldflags "-static"' -o ./target/main {{.APP_ENTRY}}
 
   fmt:
     summary: 格式化代码
@@ -89,3 +100,15 @@ tasks:
         platforms: [linux, darwin]
       - go test -coverprofile=./coverage/coverage.out ./...
       - go tool cover -html=./coverage/coverage.out -o ./coverage/coverage.html
+
+  docker:build:
+    summary: 构建 Docker 镜像
+    cmd: docker build -t lab -f ./deployments/docker/Dockerfile .
+
+  docker:up:
+    summary: Docker Compose
+    cmd: docker-compose -f ./deployments/docker/docker-compose.yml up
+
+  docker:rebuild:
+    summary: 重建 Docker 镜像并启动
+    cmd: docker-compose -f ./deployments/docker/docker-compose.yml up --build

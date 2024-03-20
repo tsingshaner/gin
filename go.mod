@@ -15,7 +15,7 @@ require (
 	github.com/swaggo/gin-swagger v1.6.0
 	golang.org/x/crypto v0.18.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
-	gorm.io/driver/postgres v1.5.4
+	gorm.io/driver/postgres v1.5.7
 	gorm.io/gorm v1.25.8
 )
 

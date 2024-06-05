@@ -1,8 +1,16 @@
-name: open-api
+name: openapi
 
 on:
   push:
     branches: ["main"]
+    paths:
+      - 'internal/**'
+      - 'pkg/**'
+      - 'cmd/**'
+      - 'config/**'
+      - 'api/**'
+      - 'go.sum'
+      - 'go.mod'
 
 permissions:
   contents: read
@@ -13,12 +21,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
-          go-version: "1.21"
+          go-version: "go.mod"
 
       - name: Install swag
         run: go install github.com/swaggo/swag/cmd/swag@latest

@@ -1,4 +1,4 @@
-[![open-api](https://github.com/Jon-a-than/gin-template/actions/workflows/open-api.yml/badge.svg)](https://qingshaner.com/gin-template/swagger.json)
+[![openapi](https://github.com/Jon-a-than/gin-template/actions/workflows/openapi.yml/badge.svg)](https://qingshaner.com/gin-template/swagger.json)
 
 ## 命令说明
 

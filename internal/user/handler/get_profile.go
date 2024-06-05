@@ -2,10 +2,10 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lab-online/internal/user/constant"
-	"github.com/lab-online/internal/user/entity"
-	"github.com/lab-online/pkg/auth"
-	"github.com/lab-online/pkg/resp"
+	"github.com/tsingshaner/gin-starter/internal/user/constant"
+	"github.com/tsingshaner/gin-starter/internal/user/entity"
+	"github.com/tsingshaner/gin-starter/pkg/auth"
+	"github.com/tsingshaner/gin-starter/pkg/resp"
 )
 
 type GetUserProfileRespData struct {

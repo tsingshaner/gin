@@ -2,8 +2,8 @@ package app
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lab-online/internal/user"
-	"github.com/lab-online/pkg/router"
+	"github.com/tsingshaner/gin-starter/internal/user"
+	"github.com/tsingshaner/gin-starter/pkg/router"
 )
 
 func (app *Context) RoutesRegister(r *gin.RouterGroup) {

@@ -1,10 +1,10 @@
 package domain
 
 import (
-	"github.com/lab-online/internal/user/constant"
-	"github.com/lab-online/internal/user/entity"
-	"github.com/lab-online/pkg/errors"
-	"github.com/lab-online/pkg/jwt"
+	"github.com/tsingshaner/gin-starter/internal/user/constant"
+	"github.com/tsingshaner/gin-starter/internal/user/entity"
+	"github.com/tsingshaner/gin-starter/pkg/errors"
+	"github.com/tsingshaner/gin-starter/pkg/jwt"
 )
 
 type UserDomain interface {

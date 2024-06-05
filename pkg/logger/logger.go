@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/lab-online/pkg/color"
+	"github.com/tsingshaner/gin-starter/pkg/color"
 )
 
 const (

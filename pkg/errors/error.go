@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lab-online/pkg/resp"
+	"github.com/tsingshaner/gin-starter/pkg/resp"
 )
 
 type Error struct {

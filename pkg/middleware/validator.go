@@ -8,9 +8,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"github.com/lab-online/pkg/color"
-	"github.com/lab-online/pkg/resp"
-	"github.com/lab-online/pkg/shared"
+	"github.com/tsingshaner/gin-starter/pkg/color"
+	"github.com/tsingshaner/gin-starter/pkg/resp"
+	"github.com/tsingshaner/gin-starter/pkg/shared"
 )
 
 // ValidatorOptions Todo interface{} 约束为结构体指针

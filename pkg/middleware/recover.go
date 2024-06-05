@@ -4,8 +4,8 @@ import (
 	"log/slog"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lab-online/pkg/logger"
-	"github.com/lab-online/pkg/resp"
+	"github.com/tsingshaner/gin-starter/pkg/logger"
+	"github.com/tsingshaner/gin-starter/pkg/resp"
 )
 
 func Recover() gin.HandlerFunc {

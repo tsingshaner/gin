@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/lab-online/pkg/logger"
+	"github.com/tsingshaner/gin-starter/pkg/logger"
 	"golang.org/x/crypto/bcrypt"
 )
 

@@ -3,11 +3,11 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/lab-online/pkg/errors"
+	"github.com/tsingshaner/gin-starter/pkg/errors"
 
-	"github.com/lab-online/internal/user/constant"
-	"github.com/lab-online/internal/user/domain"
-	"github.com/lab-online/internal/user/interface/rest"
+	"github.com/tsingshaner/gin-starter/internal/user/constant"
+	"github.com/tsingshaner/gin-starter/internal/user/domain"
+	"github.com/tsingshaner/gin-starter/internal/user/interface/rest"
 )
 
 type Handler struct {

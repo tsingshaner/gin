@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/lab-online/internal/user/infra/model"
+	"github.com/tsingshaner/gin-starter/internal/user/infra/model"
 	"gorm.io/gorm"
 )
 

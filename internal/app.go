@@ -2,8 +2,8 @@ package app
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lab-online/pkg/auth"
-	"github.com/lab-online/pkg/jwt"
+	"github.com/tsingshaner/gin-starter/pkg/auth"
+	"github.com/tsingshaner/gin-starter/pkg/jwt"
 	"gorm.io/gorm"
 )
 

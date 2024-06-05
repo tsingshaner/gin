@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/lab-online/config"
-	app "github.com/lab-online/internal"
-	"github.com/lab-online/pkg/gen"
+	"github.com/tsingshaner/gin-starter/config"
+	app "github.com/tsingshaner/gin-starter/internal"
+	"github.com/tsingshaner/gin-starter/pkg/gen"
 )
 
 func main() {

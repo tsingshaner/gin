@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/lab-online/pkg/jwt"
+	"github.com/tsingshaner/gin-starter/pkg/jwt"
 	"github.com/spf13/viper"
 )
 

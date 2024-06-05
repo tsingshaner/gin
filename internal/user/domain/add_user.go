@@ -1,8 +1,8 @@
 package domain
 
 import (
-	"github.com/lab-online/internal/user/constant"
-	"github.com/lab-online/internal/user/entity"
+	"github.com/tsingshaner/gin-starter/internal/user/constant"
+	"github.com/tsingshaner/gin-starter/internal/user/entity"
 )
 
 func (d *Domain) AddUser(user entity.UserEntity) error {

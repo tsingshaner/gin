@@ -6,7 +6,7 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/lab-online/pkg/color"
+	"github.com/tsingshaner/gin-starter/pkg/color"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 

@@ -9,14 +9,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 
-	"github.com/lab-online/config"
-	app "github.com/lab-online/internal"
-	"github.com/lab-online/pkg/color"
-	"github.com/lab-online/pkg/database"
-	"github.com/lab-online/pkg/jwt"
-	"github.com/lab-online/pkg/logger"
-	"github.com/lab-online/pkg/middleware"
-	"github.com/lab-online/pkg/openapi"
+	"github.com/tsingshaner/gin-starter/config"
+	app "github.com/tsingshaner/gin-starter/internal"
+	"github.com/tsingshaner/gin-starter/pkg/color"
+	"github.com/tsingshaner/gin-starter/pkg/database"
+	"github.com/tsingshaner/gin-starter/pkg/jwt"
+	"github.com/tsingshaner/gin-starter/pkg/logger"
+	"github.com/tsingshaner/gin-starter/pkg/middleware"
+	"github.com/tsingshaner/gin-starter/pkg/openapi"
 )
 
 //	@title			在线实验平台

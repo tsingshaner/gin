@@ -5,7 +5,7 @@ import (
 	"sync"
 	"text/template"
 
-	"github.com/lab-online/pkg/logger"
+	"github.com/tsingshaner/gin-starter/pkg/logger"
 )
 
 type CodeMap = map[string]map[int]string

@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lab-online/pkg/errors"
-	"github.com/lab-online/pkg/jwt"
-	"github.com/lab-online/pkg/resp"
+	"github.com/tsingshaner/gin-starter/pkg/errors"
+	"github.com/tsingshaner/gin-starter/pkg/jwt"
+	"github.com/tsingshaner/gin-starter/pkg/resp"
 )
 
 type Role uint8

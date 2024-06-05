@@ -1,8 +1,8 @@
 package user
 
 import (
-	"github.com/lab-online/internal/user/entity"
-	"github.com/lab-online/internal/user/infra/model"
+	"github.com/tsingshaner/gin-starter/internal/user/entity"
+	"github.com/tsingshaner/gin-starter/internal/user/infra/model"
 )
 
 func (u *User) InsertUser(userEntity entity.UserEntity) error {

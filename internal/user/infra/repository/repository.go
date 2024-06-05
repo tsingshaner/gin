@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"github.com/lab-online/internal/user/domain"
-	"github.com/lab-online/internal/user/entity"
-	"github.com/lab-online/internal/user/infra/repository/user"
+	"github.com/tsingshaner/gin-starter/internal/user/domain"
+	"github.com/tsingshaner/gin-starter/internal/user/entity"
+	"github.com/tsingshaner/gin-starter/internal/user/infra/repository/user"
 	"gorm.io/gorm"
 )
 

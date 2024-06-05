@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/lab-online/config"
-	app "github.com/lab-online/internal"
-	"github.com/lab-online/pkg/database"
-	"github.com/lab-online/pkg/logger"
+	"github.com/tsingshaner/gin-starter/config"
+	app "github.com/tsingshaner/gin-starter/internal"
+	"github.com/tsingshaner/gin-starter/pkg/database"
+	"github.com/tsingshaner/gin-starter/pkg/logger"
 	"gorm.io/gorm"
 )
 

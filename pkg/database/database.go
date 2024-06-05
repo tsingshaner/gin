@@ -3,7 +3,7 @@ package database
 import (
 	"time"
 
-	"github.com/lab-online/pkg/logger"
+	"github.com/tsingshaner/gin-starter/pkg/logger"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

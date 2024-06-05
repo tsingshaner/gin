@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 
-	"github.com/lab-online/pkg/color"
+	"github.com/tsingshaner/gin-starter/pkg/color"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 )

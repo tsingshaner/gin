@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/lab-online/pkg/logger"
+	"github.com/tsingshaner/gin-starter/pkg/logger"
 	"github.com/spf13/viper"
 )
 

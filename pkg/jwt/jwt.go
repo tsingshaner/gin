@@ -4,7 +4,7 @@ import (
 	"crypto/rsa"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/lab-online/pkg/color"
+	"github.com/tsingshaner/gin-starter/pkg/color"
 )
 
 type Config struct {

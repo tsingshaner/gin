@@ -3,8 +3,8 @@ package constant
 import (
 	"net/http"
 
-	"github.com/lab-online/pkg/gen"
-	"github.com/lab-online/pkg/resp"
+	"github.com/tsingshaner/gin-starter/pkg/gen"
+	"github.com/tsingshaner/gin-starter/pkg/resp"
 )
 
 const domainCode = 100

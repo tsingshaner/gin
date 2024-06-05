@@ -7,9 +7,9 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
-	openAPI "github.com/lab-online/api/open-api"
-	"github.com/lab-online/pkg/color"
-	"github.com/lab-online/pkg/logger"
+	openAPI "github.com/tsingshaner/gin-starter/api/open-api"
+	"github.com/tsingshaner/gin-starter/pkg/color"
+	"github.com/tsingshaner/gin-starter/pkg/logger"
 )
 
 type Config struct {

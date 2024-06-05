@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lab-online/pkg/color"
-	"github.com/lab-online/pkg/logger"
+	"github.com/tsingshaner/gin-starter/pkg/color"
+	"github.com/tsingshaner/gin-starter/pkg/logger"
 )
 
 type LogParams struct {

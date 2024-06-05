@@ -4,13 +4,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 
-	"github.com/lab-online/pkg/auth"
-	"github.com/lab-online/pkg/jwt"
+	"github.com/tsingshaner/gin-starter/pkg/auth"
+	"github.com/tsingshaner/gin-starter/pkg/jwt"
 
-	"github.com/lab-online/internal/user/domain"
-	"github.com/lab-online/internal/user/handler"
-	"github.com/lab-online/internal/user/infra/repository"
-	"github.com/lab-online/internal/user/interface/rest"
+	"github.com/tsingshaner/gin-starter/internal/user/domain"
+	"github.com/tsingshaner/gin-starter/internal/user/handler"
+	"github.com/tsingshaner/gin-starter/internal/user/infra/repository"
+	"github.com/tsingshaner/gin-starter/internal/user/interface/rest"
 )
 
 type Route struct {

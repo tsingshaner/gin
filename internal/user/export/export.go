@@ -1,8 +1,8 @@
 package export
 
 import (
-	"github.com/lab-online/internal/user/entity"
-	"github.com/lab-online/internal/user/interface/export"
+	"github.com/tsingshaner/gin-starter/internal/user/entity"
+	"github.com/tsingshaner/gin-starter/internal/user/interface/export"
 )
 
 type User struct {

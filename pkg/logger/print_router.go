@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/lab-online/pkg/color"
+	"github.com/tsingshaner/gin-starter/pkg/color"
 )
 
 func formatPath(path string) string {

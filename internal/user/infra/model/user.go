@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/lab-online/pkg/model"
+	"github.com/tsingshaner/gin-starter/pkg/model"
 )
 
 type User struct {

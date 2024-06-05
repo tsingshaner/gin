@@ -1,6 +1,6 @@
 package domain
 
-import "github.com/lab-online/internal/user/entity"
+import "github.com/tsingshaner/gin-starter/internal/user/entity"
 
 type UserRepository interface {
 	CheckUserExists(string) (bool, error)

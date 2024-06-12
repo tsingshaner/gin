@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/tsingshaner/gin-starter/pkg/logger"
 	"github.com/spf13/viper"
+	"github.com/tsingshaner/gin-starter/pkg/logger"
 )
 
 type LoggerConfig struct {

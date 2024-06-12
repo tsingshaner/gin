@@ -8,9 +8,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"github.com/tsingshaner/gin-starter/pkg/color"
 	"github.com/tsingshaner/gin-starter/pkg/resp"
 	"github.com/tsingshaner/gin-starter/pkg/shared"
+	"github.com/tsingshaner/go-pkg/color"
 )
 
 // ValidatorOptions Todo interface{} 约束为结构体指针
@@ -79,7 +79,8 @@ func checkIsStructPointer(options validatorMap) {
 	for _, obj := range options {
 		val := reflect.ValueOf(obj)
 		if val.Kind() != reflect.Ptr || val.Elem().Kind() != reflect.Struct {
-			panic(color.PrefixFatal + "Validator middleware options must be struct pointer")
+			panic(color.UnsafeBold(color.UnsafeRed("fatal:")) +
+				"Validator middleware options must be struct pointer")
 		}
 	}
 }

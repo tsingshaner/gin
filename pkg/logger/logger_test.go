@@ -1,6 +1,8 @@
 package logger
 
-import "testing"
+import (
+	"testing"
+)
 
 // 10000            155188 ns/op               0 B/op          0 allocs/op
 func BenchmarkInfo(b *testing.B) {

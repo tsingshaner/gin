@@ -4,33 +4,32 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/tsingshaner/gin-starter/pkg/color"
+	"github.com/tsingshaner/go-pkg/color"
 )
 
 func formatPath(path string) string {
-	return color.Green(fmt.Sprintf("%-40s", path))
+	return color.UnsafeGreen(fmt.Sprintf("%-40s", path))
 }
 
 func formatHandlerName(handlerName string) string {
 	handlerNameTokens := strings.Split(handlerName, "/")[3:]
-	return color.Cyan(strings.Join(handlerNameTokens, "/"))
+	return color.UnsafeCyan(strings.Join(handlerNameTokens, "/"))
+}
+
+var methodsTag = map[string]string{
+	"GET":    color.UnsafeGreen("    GET"),
+	"POST":   color.UnsafeYellow("   POST"),
+	"PUT":    color.UnsafeBlue("    PUT"),
+	"DELETE": color.UnsafeRed(" DELETE"),
+	"PATCH":  color.UnsafeMagenta("  PATCH"),
 }
 
 func FormatMethod(method string) string {
-	methodColor := map[string]int{
-		"GET":    color.ColorGreen,
-		"POST":   color.ColorYellow,
-		"PUT":    color.ColorBlue,
-		"DELETE": color.ColorRed,
-		"PATCH":  color.ColorMagenta,
-	}[method]
 
-	formattedMethod := fmt.Sprintf("%6s", method)
-
-	if methodColor != 0 {
-		return color.Style(formattedMethod, methodColor)
+	if formattedMethod, ok := methodsTag[method]; ok {
+		return formattedMethod
 	} else {
-		return color.Cyan(formattedMethod)
+		return color.UnsafeCyan(fmt.Sprintf("%7s", method))
 	}
 }
 

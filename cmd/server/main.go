@@ -11,12 +11,12 @@ import (
 
 	"github.com/tsingshaner/gin-starter/config"
 	app "github.com/tsingshaner/gin-starter/internal"
-	"github.com/tsingshaner/gin-starter/pkg/color"
 	"github.com/tsingshaner/gin-starter/pkg/database"
 	"github.com/tsingshaner/gin-starter/pkg/jwt"
 	"github.com/tsingshaner/gin-starter/pkg/logger"
 	"github.com/tsingshaner/gin-starter/pkg/middleware"
 	"github.com/tsingshaner/gin-starter/pkg/openapi"
+	"github.com/tsingshaner/go-pkg/color"
 )
 
 //	@title			在线实验平台
@@ -70,7 +70,7 @@ func main() {
 
 	logger.Info(
 		"server will listening on",
-		color.Style(server.Addr, color.ColorBlue, color.FontUnderline),
+		color.UnsafeUnderline(color.UnsafeBlue(server.Addr)),
 	)
 	if err := server.ListenAndServe(); err != nil {
 		logger.Error(err.Error())

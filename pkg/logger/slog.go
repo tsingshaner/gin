@@ -6,7 +6,7 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/tsingshaner/gin-starter/pkg/color"
+	"github.com/tsingshaner/go-pkg/color"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
@@ -96,7 +96,7 @@ func InitSlog(w io.Writer, level int) {
 		slogLevel = slog.LevelError
 	}
 
-	prefix := color.Style(" slog:", color.ColorGreen, color.FontBold)
+	prefix := color.UnsafeGreen(color.UnsafeBold(" slog:"))
 	fmt.Println(prefix, "slog min level", slogLevel)
 
 	slog.SetDefault(slog.New(slog.NewJSONHandler(w, &slog.HandlerOptions{

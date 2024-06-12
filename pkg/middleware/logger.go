@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/tsingshaner/gin-starter/pkg/color"
 	"github.com/tsingshaner/gin-starter/pkg/logger"
+	"github.com/tsingshaner/go-pkg/color"
 )
 
 type LogParams struct {
@@ -82,17 +82,17 @@ func getLevelByStatus(status int) slog.Level {
 }
 
 func formatStatus(status int, level int) string {
-	formattedStatus := color.Bold(fmt.Sprintf("%5d:", status))
+	formattedStatus := color.UnsafeBold(fmt.Sprintf("%5d:", status))
 
 	switch level {
 	case 0:
-		return color.Green(formattedStatus)
+		return color.UnsafeGreen(formattedStatus)
 	case 4:
-		return color.Yellow(formattedStatus)
+		return color.UnsafeYellow(formattedStatus)
 	case 8:
-		return color.Red(formattedStatus)
+		return color.UnsafeRed(formattedStatus)
 	default:
-		return color.Cyan(formattedStatus)
+		return color.UnsafeCyan(formattedStatus)
 	}
 }
 
@@ -112,9 +112,9 @@ func defaultFileLogger(params *LogParams) {
 func defaultConsoleFormatter(params *LogParams) string {
 	return fmt.Sprintf("%s %s %s %-50s +%s",
 		formatStatus(params.Status, int(params.Level)),
-		color.Dim(params.Start.Format("2006/01/02 15:04:05")),
+		color.UnsafeDim(params.Start.Format("2006/01/02 15:04:05")),
 		logger.FormatMethod(params.Method),
-		color.Green(params.Path),
+		color.UnsafeGreen(params.Path),
 		params.Latency,
 	)
 }

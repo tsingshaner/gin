@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/tsingshaner/gin-starter/pkg/jwt"
 	"github.com/spf13/viper"
+	"github.com/tsingshaner/gin-starter/pkg/jwt"
 )
 
 var JWT = &jwt.Config{}

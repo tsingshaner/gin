@@ -3,9 +3,9 @@ package config
 import (
 	"fmt"
 
-	"github.com/tsingshaner/gin-starter/pkg/color"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
+	"github.com/tsingshaner/go-pkg/color"
 )
 
 func init() {
@@ -31,10 +31,10 @@ func setupConfig(configFile string) {
 	viper.SetConfigFile(configFile)
 
 	if err := viper.ReadInConfig(); err != nil {
-		fmt.Println(color.PrefixError, err)
+		fmt.Println(color.UnsafeBold(color.UnsafeRed("error:")), err)
 		panic(err)
 	}
-	fmt.Println(color.PrefixInfo, "using config file", viper.ConfigFileUsed())
+	fmt.Println(color.UnsafeBold(color.UnsafeGreen(" info:")), "using config file", viper.ConfigFileUsed())
 
 	unmarshalConfig()
 }
@@ -42,7 +42,7 @@ func setupConfig(configFile string) {
 func requireConfig(key ...string) {
 	for _, k := range key {
 		if !viper.IsSet(k) {
-			panic("config field `" + color.Red(k) + "` is required")
+			panic("config field `" + color.UnsafeRed(k) + "` is required")
 		}
 	}
 }

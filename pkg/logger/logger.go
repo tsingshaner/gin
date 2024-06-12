@@ -5,7 +5,15 @@ import (
 	"log"
 	"os"
 
-	"github.com/tsingshaner/gin-starter/pkg/color"
+	"github.com/tsingshaner/go-pkg/color"
+)
+
+var (
+	PrefixDebug = color.UnsafeBold(color.UnsafeBlue("debug:"))
+	PrefixInfo  = color.UnsafeBold(color.UnsafeGreen(" info:"))
+	PrefixWarn  = color.UnsafeBold(color.UnsafeYellow(" warn:"))
+	PrefixError = color.UnsafeBold(color.UnsafeRed("error:"))
+	PrefixFatal = color.UnsafeBold(color.UnsafeRed("fatal:"))
 )
 
 const (
@@ -15,14 +23,14 @@ const (
 	LevelError
 )
 
-var level int
+var level int = LevelDebug | LevelInfo | LevelWarn | LevelError
 
 func InitLog(level int) {
 	log.SetFlags(log.Lshortfile)
 	SetLevel(level)
 }
 
-var debug = NewLogger(color.PrefixDebug)
+var debug = NewLogger(PrefixDebug)
 
 func Debug(v ...any) {
 	if level&LevelDebug != 0 {
@@ -30,7 +38,7 @@ func Debug(v ...any) {
 	}
 }
 
-var info = NewLogger(color.PrefixInfo)
+var info = NewLogger(PrefixInfo)
 
 func Info(msg ...any) {
 	if level&LevelInfo != 0 {
@@ -38,7 +46,7 @@ func Info(msg ...any) {
 	}
 }
 
-var warn = NewLogger(color.PrefixWarn)
+var warn = NewLogger(PrefixWarn)
 
 func Warn(msg ...any) {
 	if level&LevelWarn != 0 {
@@ -46,7 +54,7 @@ func Warn(msg ...any) {
 	}
 }
 
-var errorLogger = NewLogger(color.PrefixError)
+var errorLogger = NewLogger(PrefixError)
 
 func Error(msg ...any) {
 	if level&LevelError != 0 {
@@ -59,6 +67,6 @@ func NewLogger(prefix string) *log.Logger {
 }
 
 func SetLevel(l int) {
-	fmt.Println(color.PrefixInfo, "log level:", l)
+	fmt.Println(PrefixInfo, "log level:", l)
 	level = l
 }

@@ -1,48 +1,98 @@
 package config
 
 import (
+	"flag"
 	"fmt"
+	"os"
+	"path/filepath"
+	"reflect"
+	"strings"
 
-	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 	"github.com/tsingshaner/go-pkg/color"
+	"github.com/tsingshaner/go-pkg/log/console"
 )
 
 func init() {
-	var configFile string
-	pflag.StringVarP(&configFile, "config", "c", "./config/app.yaml", "config file path")
-	pflag.Parse()
+	args := parseArgs()
+	loadConfig(args)
+	s = NewStore()
 
-	setupConfig(configFile)
+	if !args.silence {
+		showConfig()
+	}
 }
 
-func unmarshalConfig() {
-	viper.AutomaticEnv()
-	viper.WatchConfig()
-
-	setupServerConfig()
-	setupCORSConfig()
-	setupDatabaseConfig()
-	setupLoggerConfig()
-	setupJWTConfig()
+type args struct {
+	filePath string
+	fileType string
+	silence  bool
 }
 
-func setupConfig(configFile string) {
-	viper.SetConfigFile(configFile)
+func loadConfig(args *args) {
+	viper.SetConfigFile(args.filePath + args.fileType)
 
 	if err := viper.ReadInConfig(); err != nil {
-		fmt.Println(color.UnsafeBold(color.UnsafeRed("error:")), err)
 		panic(err)
 	}
-	fmt.Println(color.UnsafeBold(color.UnsafeGreen(" info:")), "using config file", viper.ConfigFileUsed())
-
-	unmarshalConfig()
 }
 
-func requireConfig(key ...string) {
-	for _, k := range key {
-		if !viper.IsSet(k) {
-			panic("config field `" + color.UnsafeRed(k) + "` is required")
-		}
+func parseArgs() *args {
+	args := &args{}
+
+	flag.StringVar(&args.filePath, "config", "config.json", "Path to the configuration file")
+	flag.BoolVar(&args.silence, "silence", false, "Silence the output of config loading")
+	flag.Parse()
+
+	args.fileType = filepath.Ext(args.filePath)
+
+	if dir, err := os.Getwd(); err == nil {
+		args.filePath = filepath.Join(dir, args.filePath)
+		args.filePath = args.filePath[0 : len(args.filePath)-len(args.fileType)]
+	}
+
+	if !args.silence {
+		showArgs(args)
+	}
+
+	return args
+}
+
+func showArgs(args *args) {
+	console.Info(
+		"will load configuration from %s",
+		color.UnsafeCyan(args.filePath)+color.UnsafeYellow(args.fileType),
+	)
+}
+
+func showConfig() {
+	sb := &strings.Builder{}
+	sb.WriteString("config loaded success")
+	formatStruct(sb, "    * ", s)
+
+	console.Trace(sb.String())
+}
+
+func formatStruct(sb *strings.Builder, prefix string, obj any) {
+	v := reflect.ValueOf(obj)
+	if v.Kind() == reflect.Ptr {
+		v = v.Elem()
+	} else if v.Kind() != reflect.Struct {
+		sb.WriteString(fmt.Sprintf("%v", obj))
+		return
+	}
+
+	t := v.Type()
+
+	for i := 0; i < v.NumField(); i++ {
+		field := v.Field(i)
+		sb.WriteString(fmt.Sprintf(
+			"\n%s%s %s: ",
+			prefix,
+			color.UnsafeCyan(t.Field(i).Name),
+			color.UnsafeYellow(t.Field(i).Type.String())),
+		)
+
+		formatStruct(sb, "  "+prefix, field.Interface())
 	}
 }

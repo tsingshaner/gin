@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=v0.schema.json
+
+consoleLevel: 63
+
+cors:
+  enabled: true
+  allowAllOrigins: false
+  allowOrigins: [http://localhost:5173]
+  allowMethods: [GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS]
+  allowHeaders: ["*"]
+  allowCredentials: false
+  maxAge: 5m
+
+server:
+  host: 127.0.0.1
+  port: 4936
+  base: /api
+  mode: debug
+  readTimeout: 5m
+  writeTimeout: 5m
+  maxHeaderBytes: 1048576
+
+logger:
+  level: 63
+  stdoutWriter:
+    enable: true

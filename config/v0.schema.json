@@ -1,0 +1,185 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Server app YAML Schema",
+  "description": "Schema for server configuration file",
+  "required": ["consoleLevel", "cors", "server", "logger"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "enum": [0]
+    },
+    "consoleLevel": {
+      "description": "console logger level",
+      "type": "integer",
+      "examples": [63]
+    },
+    "cors": {
+      "$ref": "#/definitions/cors"
+    },
+    "server": {
+      "$ref": "#/definitions/server"
+    },
+    "logger": {
+      "$ref": "#/definitions/logger"
+    }
+  },
+  "definitions": {
+    "cors": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "allowAllOrigins",
+        "allowOrigins",
+        "allowMethods",
+        "allowHeaders",
+        "allowCredentials"
+      ],
+      "properties": {
+        "enabled": {
+          "description": "enable CORS middleware",
+          "type": "boolean"
+        },
+        "allowAllOrigins": {
+          "type": "boolean"
+        },
+        "allowOrigins": {
+          "description": "a list of origins a cross-domain request can be executed from. If the special \"*\" value is present in the list, all origins will be allowed.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "examples": [["http://localhost:5173"]]
+        },
+        "allowMethods": {
+          "description": "a list of methods the client is allowed to use with cross-domain requests.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
+          },
+          "examples": [
+            ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
+          ]
+        },
+        "allowPrivateNetwork": {
+          "description": "indicates whether the response should include allow private network header",
+          "type": "boolean"
+        },
+        "allowHeaders": {
+          "description": "a list of non simple headers the client is allowed to use with cross-domain requests.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "examples": [["Content-Type", "Authorization", "X-Requested-With"]]
+        },
+        "allowCredentials": {
+          "description": "indicates whether the request can include user credentials like cookies, HTTP authentication or client side SSL certificates.",
+          "type": "boolean"
+        },
+        "exposeHeaders": {
+          "description": "indicates which headers are safe to expose to the API of a CORS API specification",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "examples": [["Content-Length"]]
+        },
+        "maxAge": {
+          "description": "indicates how long (with second-precision) the results of a preflight request can be cached",
+          "type": "string",
+          "examples": ["5m"]
+        },
+        "allowWildcard": {
+          "description": "allows to add origins like http://some-domain/*, https://api.* or http://some.*.subdomain.com",
+          "type": "boolean"
+        },
+        "allowBrowserExtensions": {
+          "description": "allows usage of popular browser extensions schemas",
+          "type": "boolean"
+        },
+        "customSchemas": {
+          "description": "allows to add custom schema like tauri://",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "examples": [["tauri://"]]
+        },
+        "allowWebSockets": {
+          "type": "boolean"
+        },
+        "allowFiles": {
+          "description": "Allows usage of file:// schema (dangerous!) use it only when you 100% sure it's needed",
+          "type": "boolean"
+        },
+        "optionsResponseStatusCode": {
+          "description": "Allows to pass custom OPTIONS response status code for old browsers / clients",
+          "type": "integer",
+          "examples": [200]
+        }
+      }
+    },
+    "server": {
+      "type": "object",
+      "properties": {
+        "host": { "type": "string", "examples": ["127.0.0.1"] },
+        "port": { "type": "integer", "examples": [4936] },
+        "mode": {
+          "description": "see gin mode",
+          "enum": ["debug", "production"]
+        },
+        "base": {
+          "description": "path prefix for all routes",
+          "type": "string",
+          "examples": ["/api"]
+        },
+        "readTimeout": {
+          "description": "read timeout in seconds",
+          "type": "string",
+          "examples": ["5m"]
+        },
+        "writeTimeout": {
+          "description": "write timeout in seconds",
+          "type": "string",
+          "examples": ["5m"]
+        },
+        "maxHeaderBytes": {
+          "description": "maximum header bytes",
+          "type": "integer",
+          "examples": [1048576]
+        }
+      },
+      "required": [
+        "host",
+        "port",
+        "mode",
+        "readTimeout",
+        "writeTimeout",
+        "maxHeaderBytes"
+      ]
+    },
+    "logger": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "description": "log enabled level",
+          "type": "integer",
+          "examples": [63]
+        },
+        "stdoutWriter": {
+          "type": "object",
+          "required": ["enable"],
+          "properties": {
+            "enable": {
+              "description": "enable stdout writer",
+              "type": "boolean",
+              "examples": [true]
+            }
+          }
+        }
+      },
+      "required": ["level"]
+    }
+  }
+}

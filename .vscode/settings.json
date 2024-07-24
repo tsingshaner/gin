@@ -1,4 +1,15 @@
 {
+  "explorer.fileNesting.enabled": true,
+	"explorer.fileNesting.expand": false,
+	"explorer.fileNesting.patterns": {
+		"taskfile.yml": "taskfile*,go.work, go.work.sum, go.mod, go.sum, *.pem",
+    "config.go": "config.*",
+		"go.mod": "go.sum",
+		"go.work": "",
+		"README.md": "LICENSE, CHANGELOG.md,CONTRIBUTING.md, *.svg",
+		".gitignore": ".gitignore, .dockerignore, .editorconfig, .gitattributes, .gitmodules, .gitmessage, .mailmap, .git-blame*",
+		"*.go": "${capture}_test.go, ${capture}_bench_test.go"
+	},
   "go.formatTool": "gofmt",
   "go.lintOnSave": "package",
   "[go]": {
@@ -8,5 +19,15 @@
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit"
     }
-  }
+  },
+  "cSpell.words": [
+    "gorm",
+    "mapstructure",
+    "oneof",
+    "prettylog",
+    "requestid",
+    "taskfile",
+    "tsingshaner",
+    "varchar"
+  ]
 }

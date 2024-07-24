@@ -1,0 +1,13 @@
+go 1.22
+
+use (
+	./app
+	./cmd
+	./config
+	./middleware
+	./mod/user
+	./pkg
+	./resp
+	./shared
+	./validator
+)

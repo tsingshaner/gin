@@ -16,6 +16,7 @@ server:
   port: 4936
   base: /api
   mode: debug
+  requestIdHeader: X-Request-ID
   readTimeout: 5m
   writeTimeout: 5m
   maxHeaderBytes: 1048576

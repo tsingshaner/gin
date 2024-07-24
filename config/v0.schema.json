@@ -127,7 +127,7 @@
         "port": { "type": "integer", "examples": [4936] },
         "mode": {
           "description": "see gin mode",
-          "enum": ["debug", "production"]
+          "enum": ["debug", "release", "test"]
         },
         "base": {
           "description": "path prefix for all routes",
@@ -138,6 +138,11 @@
           "description": "read timeout in seconds",
           "type": "string",
           "examples": ["5m"]
+        },
+        "requestIdHeader": {
+          "description": "request id header",
+          "type": "string",
+          "examples": ["X-Request-ID"]
         },
         "writeTimeout": {
           "description": "write timeout in seconds",
@@ -155,6 +160,7 @@
         "port",
         "mode",
         "readTimeout",
+        "requestIdHeader",
         "writeTimeout",
         "maxHeaderBytes"
       ]

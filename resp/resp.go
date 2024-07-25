@@ -5,6 +5,7 @@ package resp
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/tsingshaner/go-pkg/errors"
@@ -66,6 +67,16 @@ func NotFound[C errors.Coder, Err any](c *gin.Context, code C, err ...Err) {
 
 func InternalServerError[C errors.Coder, Err any](c *gin.Context, code C, err ...Err) {
 	Failed(c, http.StatusInternalServerError, code, err...)
+}
+
+func Error(c *gin.Context, err error) {
+	message := strings.Split(err.Error(), "\n")[0]
+
+	if restErr, ok := errors.Extract[errors.RESTError[string]](err); ok {
+		Failed(c, restErr.Status(), restErr.Code(), message)
+	} else {
+		InternalServerError(c, CodeInternalError, err.Error())
+	}
 }
 
 func ValidateError[T any](c *gin.Context, message T) {

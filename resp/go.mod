@@ -4,7 +4,7 @@ go 1.22
 
 require (
 	github.com/gin-gonic/gin v1.10.0
-	github.com/tsingshaner/go-pkg/errors v0.1.1
+	github.com/tsingshaner/go-pkg/errors v0.3.0
 )
 
 require (

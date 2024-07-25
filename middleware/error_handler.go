@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"errors"
+	stdErrors "errors"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -9,7 +9,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/tsingshaner/gin/resp"
-	iErrors "github.com/tsingshaner/go-pkg/errors"
+	"github.com/tsingshaner/go-pkg/errors"
 	"github.com/tsingshaner/go-pkg/log"
 )
 
@@ -17,6 +17,9 @@ func NotFoundHandler(c *gin.Context) {
 	resp.NotFound(c, resp.CodeNotFound, resp.ErrNotFound.Error())
 }
 
+// NewErrorHandler is a middleware that recovers from any panics and writes a 500 if there was one.
+//
+// if the response status code is 200 and the response body is empty, it will call resp.Error to write a error response.
 func NewErrorHandler(logger log.Slog) gin.HandlerFunc {
 	logger = logger.
 		WithOptions(&log.ChildLoggerOptions{AddSource: false}).
@@ -28,7 +31,9 @@ func NewErrorHandler(logger log.Slog) gin.HandlerFunc {
 				e := fmt.Errorf("%+v", err)
 
 				logger.Error("recover a unhandled err", slog.String("error", e.Error()))
-				c.Error(errors.Join(resp.ErrInternal, e))
+
+				c.Error(stdErrors.Join(resp.ErrInternal, e))
+				resp.Error(c, c.Errors.Last())
 			}
 		}()
 
@@ -36,8 +41,7 @@ func NewErrorHandler(logger log.Slog) gin.HandlerFunc {
 
 		if c.Writer.Status() == http.StatusOK && !c.Writer.Written() {
 			lastErr := c.Errors.Last()
-			var restErr iErrors.RESTError[string]
-			if errors.As(lastErr.Err, &restErr) {
+			if restErr, ok := errors.Extract[errors.RESTError[string]](lastErr.Err); ok {
 				message := strings.Split(lastErr.Error(), "\n")[0]
 				resp.Failed(c, restErr.Status(), restErr.Code(), message)
 			}

@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "allOf": [
+    {
+      "$ref": "https://raw.githubusercontent.com/tsingshaner/go-pkg/main/errors/gen/v0.schema.json"
+    },
+    {
+      "required": ["successFile", "successPkg", "success"],
+      "properties": {
+        "successFile": {
+          "type": "string",
+          "pattern": "^.*\\.go$",
+          "description": "the file name of generate success response code go file"
+        },
+        "successPkg": {
+          "type": "string",
+          "description": "the package name of generate success response code go file"
+        },
+        "success": {
+          "description": "define success response code",
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[0-9A-Z]{2}$"
+          },
+          "patternProperties": {
+            "^[0-9a-z]{2}$": {
+              "type": "object",
+              "required": ["key", "msg"],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "pattern": "^[A-Z][a-z]*([A-Z][a-z]*)*$"
+                },
+                "msg": {
+                  "description": "success message",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

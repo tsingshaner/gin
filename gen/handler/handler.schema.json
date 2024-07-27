@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "oneOf": [
+    {
+      "required": ["version", "api"],
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "number",
+          "enum": [1]
+        },
+        "api": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^/"
+          },
+          "patternProperties": {
+            "^/": {
+              "$ref": "#/definitions/api"
+            }
+          }
+        }
+      }
+    }
+  ],
+
+  "definitions": {
+    "api": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^(guards|get|post|put|delete|patch|head|options|any)$|^/"
+      },
+      "patternProperties": {
+        "guards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/handler"
+          }
+        },
+        "get|post|put|delete|patch|head|options": {
+          "$ref": "#/definitions/handler"
+        },
+        "^/": {
+          "$ref": "#/definitions/api"
+        }
+      }
+    },
+    "handler": {
+      "type": "string",
+      "pattern": "^[a-z]+([A-Z][a-z0-9]*)*$"
+    }
+  }
+}

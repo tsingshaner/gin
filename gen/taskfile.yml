@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+env:
+  GO111MODULE: on
+  GOPROXY: https://goproxy.cn,direct
+
+tasks:
+  handler:
+    summary: 生成 handler
+    cmds:
+      - go run ./cmd/gen-handler/main.go {{.CLI_ARGS}}

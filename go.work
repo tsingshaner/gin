@@ -1,13 +1,16 @@
 go 1.22
 
 use (
+	./api/openapi
 	./app
 	./cmd
 	./config
+	./gen
 	./middleware
 	./mod/user
 	./pkg
 	./resp
 	./shared
+	./swagger
 	./validator
 )

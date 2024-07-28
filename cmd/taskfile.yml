@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+env:
+  GO111MODULE: on
+  GOPROXY: https://goproxy.cn,direct
+
+interval: 500ms
+
+tasks:
+  start: go run server/main.go --config ../config/config.example.yml
+
+  start:dev:
+    watch: true
+    cmd: task start | prettylog
+    deps: [swag, kill]
+    env: { FORCE_COLOR: 1 }
+    method: none
+    run: always
+    sources:
+      - cmd/server/main.go
+      - ../app/**/*.go
+      - ../mod/**/*.go
+      - ../config/*
+
+  swag:
+    desc: "Generate swagger docs"
+    vars:
+      CLI_PATH_ARGS: -d ../app,../mod/user -g ../app/app.go -o ../api/openapi --md ../api/md
+      CLI_FLAG_ARGS: --parseDependency --parseInternal
+    cmd: swag init {{.CLI_PATH_ARGS}} {{.CLI_FLAG_ARGS}}
+    sources:
+      - ../api/md/*
+      - ../app/app.go
+      - ../config/*.yml
+      - ../mod/*/internal/handler/*.go
+
+  kill:
+    desc: "kill the running server"
+    cmds:
+      - cmd: "taskkill /IM main.exe /F"
+        platforms: [windows]
+        ignore_error: true
+        silent: true
+      - cmd: pkill -f "main"
+        platforms: [linux, darwin]
+        ignore_error: true
+        silent: true

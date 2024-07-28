@@ -1,6 +1,10 @@
 {
   "explorer.fileNesting.enabled": true,
 	"explorer.fileNesting.expand": false,
+  "editor.quickSuggestions": {
+        "strings": true
+  },
+  "editor.suggest.showWords": true,
 	"explorer.fileNesting.patterns": {
 		"taskfile.yml": "taskfile*,go.work, go.work.sum, go.mod, go.sum, *.pem",
     "config.go": "config.*",
@@ -8,7 +12,8 @@
 		"go.work": "",
 		"README.md": "LICENSE, CHANGELOG.md,CONTRIBUTING.md, *.svg",
 		".gitignore": ".gitignore, .dockerignore, .editorconfig, .gitattributes, .gitmodules, .gitmessage, .mailmap, .git-blame*",
-		"*.go": "${capture}_test.go, ${capture}_bench_test.go"
+		"handler.go": "handler_gen.go, handler.yml",
+    "*.go": "${capture}_test.go, ${capture}_bench_test.go",
 	},
   "go.formatTool": "gofmt",
   "go.lintOnSave": "package",
@@ -24,9 +29,11 @@
     "gorm",
     "mapstructure",
     "oneof",
+    "pkill",
     "prettylog",
     "requestid",
     "taskfile",
+    "taskkill",
     "tsingshaner",
     "varchar"
   ]

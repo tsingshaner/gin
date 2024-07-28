@@ -10,6 +10,8 @@ deployments/docker/data
 api/open-api/*
 !api/open-api/api.md
 
+mod/**/handler_gen.go
+
 *.log
 *.db
 

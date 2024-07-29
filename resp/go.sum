@@ -10,8 +10,7 @@ github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ3
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1VwoXQT9A3Wy9MM3WgvqSxFWenqJduM=
-github.com/gabriel-vasile/mimetype v1.4.4 h1:QjV6pZ7/XZ7ryI2KuyeEDE8wnh7fHP9YnQy+R0LnH8I=
-github.com/gabriel-vasile/mimetype v1.4.4/go.mod h1:JwLei5XPtWdGiMFB5Pjle1oEeoSeEuJfJE+TtfvdB/s=
+github.com/gabriel-vasile/mimetype v1.4.5 h1:J7wGKdGu33ocBOhGy0z653k/lFKLFDPJMG8Gql0kxn4=
 github.com/gin-contrib/sse v0.1.0 h1:Y/yl/+YNO8GZSjAhjMsSuLt29uWRFHdHYUb5lYOV9qE=
 github.com/gin-contrib/sse v0.1.0/go.mod h1:RHrZQHXnP2xjPF+u1gW/2HnVO7nvIa9PG3Gm+fLHvGI=
 github.com/gin-gonic/gin v1.10.0 h1:nTuyha1TYqgedzytsKYqna+DfLos46nTv2ygFy86HFU=
@@ -69,10 +68,6 @@ github.com/stretchr/testify v1.8.1/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
 github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=
 github.com/stretchr/testify v1.9.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
-github.com/tsingshaner/go-pkg/errors v0.1.1 h1:NuwZUW1tMxxKbibEmjx7seYOeYDKuROsFVEYIgsWD2c=
-github.com/tsingshaner/go-pkg/errors v0.1.1/go.mod h1:pi2jyfo6ozGeY8gtBBBHbtPXlgWuR4v4ifsrr1liJg4=
-github.com/tsingshaner/go-pkg/errors v0.2.0 h1:yVPlr4FpTSPxDN8ODbFtktK6sqU3UZfPCDYOwK8mNmE=
-github.com/tsingshaner/go-pkg/errors v0.2.0/go.mod h1:pi2jyfo6ozGeY8gtBBBHbtPXlgWuR4v4ifsrr1liJg4=
 github.com/tsingshaner/go-pkg/errors v0.3.0 h1:DGM6r5vRHU/Hxg7qeqP4G2JwAc79a38DnUdKb2DKxJY=
 github.com/tsingshaner/go-pkg/errors v0.3.0/go.mod h1:pi2jyfo6ozGeY8gtBBBHbtPXlgWuR4v4ifsrr1liJg4=
 github.com/twitchyliquid64/golang-asm v0.15.1 h1:SU5vSMR7hnwNxj24w34ZyCi/FmDZTkS4MhqMhdFk5YI=

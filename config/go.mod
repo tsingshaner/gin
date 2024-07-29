@@ -13,7 +13,7 @@ require (
 	github.com/spf13/viper v1.19.0 // indirect
 	github.com/tsingshaner/go-pkg/color v0.2.1 // indirect
 	github.com/tsingshaner/go-pkg/prettylog v0.1.2 // indirect
-	github.com/tsingshaner/go-pkg/util v0.4.0 // indirect
+	github.com/tsingshaner/go-pkg/util v0.5.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
 	gorm.io/gorm v1.25.11 // indirect

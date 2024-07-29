@@ -57,7 +57,7 @@ github.com/tsingshaner/go-pkg/conf v0.0.1 h1:4dQs7t1sa/SvYoz3VZtG2W+b1GE38WKOByO
 github.com/tsingshaner/go-pkg/conf v0.0.1/go.mod h1:G4dRRo5DY+UyD6CQqVri+QzgQoYl6Bdy0/2JmtV8KSE=
 github.com/tsingshaner/go-pkg/log v0.2.2 h1:asycFRHLjqYqeVoqSNRaoPwpFHB2gofj5iMrcm7q4VM=
 github.com/tsingshaner/go-pkg/prettylog v0.1.2 h1:TLO0Q/+kzxoF8lReOzrJkqMiBsZiJxERcmTgUiVYh1A=
-github.com/tsingshaner/go-pkg/util v0.4.0 h1:C/eL9l6U9rXsK5cX1liQHEbarrTfFyHOx5awEzMZLGQ=
+github.com/tsingshaner/go-pkg/util v0.5.0 h1:BPXZchVHSWBl0sY5zSpZN7aiLnOrlgLF2shymHMo9ZE=
 github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e h1:JVG44RsyaB9T2KIHavMF/ppJZNG9ZpyihvCd0w101no=
 go.uber.org/goleak v1.3.0 h1:2K3zAYmnTNqV73imy9J1T3WC+gmCePx2hEGkimedGto=
 go.uber.org/multierr v1.11.0 h1:blXXJkSxSSfBVBlC76pxqeO+LN3aDfLQo+309xJstO0=

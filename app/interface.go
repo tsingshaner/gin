@@ -1,17 +1,19 @@
 package app
 
-type ServerOptions struct {
-	Host   string `json:"host" yaml:"host" toml:"host"`
-	Port   int    `json:"port" yaml:"port" toml:"port"`
-	Prefix string `json:"prefix" yaml:"prefix" toml:"prefix"`
-	Mode   string `json:"mode" yaml:"mode" toml:"mode"`
-}
+import (
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+)
 
-type Options struct {
-	ServerOptions
+type Provider interface {
+	Engine() *gin.Engine
+	Database() *gorm.DB
 }
 
 type Server interface {
-	Start() error
-	Shotdown() error
+	Provider
+
+	Ready() error
+	Start()
+	Shutdown() error
 }

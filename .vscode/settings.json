@@ -27,6 +27,7 @@
   },
   "cSpell.words": [
     "gorm",
+    "httplogger",
     "mapstructure",
     "oneof",
     "pkill",

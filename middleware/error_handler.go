@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/tsingshaner/gin/middleware/requestid"
 	"github.com/tsingshaner/gin/resp"
 	"github.com/tsingshaner/go-pkg/errors"
 	"github.com/tsingshaner/go-pkg/log"
@@ -30,7 +31,7 @@ func NewErrorHandler(logger log.Slog) gin.HandlerFunc {
 			if err := recover(); err != nil {
 				e := fmt.Errorf("%+v", err)
 
-				logger.Error("recover a unhandled err", slog.String("error", e.Error()))
+				logger.Error("recover a unhandled err", slog.String("err", e.Error()))
 
 				c.Error(stdErrors.Join(resp.ErrInternal, e))
 				resp.Error(c, c.Errors.Last())
@@ -45,6 +46,10 @@ func NewErrorHandler(logger log.Slog) gin.HandlerFunc {
 				message := strings.Split(lastErr.Error(), "\n")[0]
 				resp.Failed(c, restErr.Status(), restErr.Code(), message)
 			}
+		}
+
+		if errStr := c.Errors.String(); errStr != "" {
+			logger.Warn(requestid.Get(c), slog.String("err", errStr))
 		}
 	}
 }

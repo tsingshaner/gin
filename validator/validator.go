@@ -2,29 +2,13 @@ package validator
 
 import (
 	"errors"
+	"io"
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/locales/en"
-	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 	"github.com/tsingshaner/gin/resp"
 )
-
-// Translators 错误翻译词典容器 默认 "en"
-//
-// 添加翻译语言
-//
-//	import (
-//		"github.com/go-playground/locales/zh"
-//		"github.com/tsingshaner/gin/validator"
-//	)
-//
-//	func main() {
-//		// validator.UniversalTranslator = ut.New(en.New()) 替换 fallback
-//		validator.UniversalTranslator.AddTranslator(zh.New(), true) // 覆盖默认
-//	}
-var Translators = ut.New(en.New())
 
 const (
 	keyBody   = "@@body"
@@ -34,15 +18,9 @@ const (
 )
 
 type Binder func(*gin.Context) func(obj any) error
-type ErrorHandler func(*gin.Context, error)
-
-// UseErrorHandler 覆盖校验错误处理函数
-func UseErrorHandler(handler ErrorHandler) {
-	errorHandler = handler
-}
 
 // handleValidatorError 处理验证错误
-var errorHandler = func(c *gin.Context, err error) {
+var ErrorHandler func(*gin.Context, error) = func(c *gin.Context, err error) {
 	var validationErrs validator.ValidationErrors
 
 	if errors.As(err, &validationErrs) {
@@ -50,6 +28,9 @@ var errorHandler = func(c *gin.Context, err error) {
 			strings.Split(c.Request.Header.Get("Accept-Language"), ",")...,
 		)
 		resp.ValidateError(c, validationErrs.Translate(translator))
+		return
+	} else if errors.Is(err, io.EOF) {
+		resp.ValidateError(c, "request args is empty")
 		return
 	}
 
@@ -62,7 +43,7 @@ func Validator[T any](binder Binder, key string) gin.HandlerFunc {
 		body := new(T)
 
 		if err := binder(c)(body); err != nil {
-			errorHandler(c, err)
+			ErrorHandler(c, err)
 		}
 
 		c.Set(key, body)

@@ -70,12 +70,13 @@ func InternalServerError[C errors.Coder, Err any](c *gin.Context, code C, err ..
 }
 
 func Error(c *gin.Context, err error) {
+	c.Error(err)
 	message := strings.Split(err.Error(), "\n")[0]
 
 	if restErr, ok := errors.Extract[errors.RESTError[string]](err); ok {
 		Failed(c, restErr.Status(), restErr.Code(), message)
 	} else {
-		InternalServerError(c, CodeInternalError, err.Error())
+		InternalServerError(c, CodeInternalError, message)
 	}
 }
 

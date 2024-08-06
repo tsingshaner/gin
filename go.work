@@ -5,10 +5,10 @@ use (
 	./app
 	./cmd
 	./config
+	./e2e
 	./gen
 	./middleware
 	./mod/user
-	./pkg
 	./resp
 	./shared
 	./swagger

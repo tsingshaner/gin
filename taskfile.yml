@@ -12,7 +12,39 @@ vars:
 # 监听文件变化的时间间隔
 interval: 500ms
 
+includes:
+  cmd:
+    dir: cmd
+    taskfile: cmd/taskfile.yml
+
+  config:
+    dir: config
+    taskfile: config/taskfile.yml
+
+  e2e:
+    dir: e2e
+    taskfile: e2e/taskfile.yml
+
+  gen:
+    dir: gen
+    taskfile: gen/taskfile.yml
+
+  mod:user:
+    dir: mod/user
+    taskfile: mod/user/taskfile.yml
+
 tasks:
+  default: task --list-all
+
+  githooks:
+    summary: setup Git hooks
+    cmd: git config core.hooksPath githooks
+
+  e2e:
+    summary: 运行端到端测试
+    deps:
+      - mod:user:e2e
+
   install:
     summary: 安装依赖
     cmds:

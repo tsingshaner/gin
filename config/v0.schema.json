@@ -2,7 +2,15 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Server app YAML Schema",
   "description": "Schema for server configuration file",
-  "required": ["consoleLevel", "cors", "server", "logger"],
+  "required": [
+    "consoleLevel",
+    "cors",
+    "jwt",
+    "postgres",
+    "server",
+    "swagger",
+    "logger"
+  ],
   "properties": {
     "version": {
       "type": "integer",
@@ -16,8 +24,17 @@
     "cors": {
       "$ref": "#/definitions/cors"
     },
+    "jwt": {
+      "$ref": "#/definitions/jwt"
+    },
+    "postgres": {
+      "$ref": "#/definitions/postgres"
+    },
     "server": {
       "$ref": "#/definitions/server"
+    },
+    "swagger": {
+      "$ref": "#/definitions/swagger"
     },
     "logger": {
       "$ref": "#/definitions/logger"
@@ -120,6 +137,113 @@
         }
       }
     },
+    "jwt": {
+      "type": "object",
+      "required": ["claims", "methods"],
+      "properties": {
+        "claims": {
+          "type": "object",
+          "required": ["expire", "refreshExpire"],
+          "properties": {
+            "audience": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "examples": [["https://example.com"]]
+            },
+            "issuer": {
+              "type": "string",
+              "examples": ["https://example.com"]
+            },
+            "subject": {
+              "type": "string",
+              "examples": ["demo"]
+            },
+            "expire": {
+              "type": "string",
+              "examples": ["30m", "1h", "24h"]
+            },
+            "refreshExpire": {
+              "type": "string",
+              "examples": ["30m", "1h", "24h"]
+            }
+          }
+        },
+        "methods": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "if": {
+              "properties": {
+                "alg": { "pattern": "^HS" }
+              }
+            },
+            "then": {
+              "required": ["alg", "key"]
+            },
+            "else": {
+              "required": ["alg", "pem"]
+            },
+            "properties": {
+              "alg": {
+                "type": "string",
+                "enum": [
+                  "HS256",
+                  "HS384",
+                  "HS512",
+                  "RS256",
+                  "RS384",
+                  "RS512",
+                  "ES256",
+                  "ES384",
+                  "ES512",
+                  "EdDSA"
+                ]
+              },
+              "key": {
+                "type": "string",
+                "minLength": 8
+              },
+              "pem": {
+                "type": "object",
+                "required": ["publicPath", "privatePath"],
+                "properties": {
+                  "publicPath": { "type": "string" },
+                  "privatePath": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "postgres": {
+      "type": "object",
+      "properties": {
+        "host": { "type": "string", "examples": ["127.0.0.1"] },
+        "port": { "type": "integer", "examples": [5432] },
+        "user": { "type": "string", "examples": ["postgres"] },
+        "password": { "type": "string", "examples": ["postgres"] },
+        "database": { "type": "string", "examples": ["postgres"] },
+        "sslMode": {
+          "type": "string",
+          "enum": [
+            "disable",
+            "allow",
+            "prefer",
+            "require",
+            "verify-ca",
+            "verify-full"
+          ]
+        },
+        "timeZone": {
+          "type": "string",
+          "examples": ["Asia/Shanghai"]
+        }
+      }
+    },
     "server": {
       "type": "object",
       "properties": {
@@ -164,6 +288,22 @@
         "writeTimeout",
         "maxHeaderBytes"
       ]
+    },
+    "swagger": {
+      "type": "object",
+      "required": ["enable"],
+      "properties": {
+        "enable": {
+          "description": "enable swagger",
+          "type": "boolean",
+          "examples": [true]
+        },
+        "basePath": {
+          "description": "base path for swagger",
+          "type": "string",
+          "examples": ["/docs"]
+        }
+      }
     },
     "logger": {
       "type": "object",

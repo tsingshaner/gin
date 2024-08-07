@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=v0.schema.json
+# yaml-language-server: $schema=../config/v0.schema.json
 
 consoleLevel: 63
 
@@ -23,8 +23,8 @@ jwt:
       key: secretwithdw
     - alg: EdDSA
       pem:
-        publicPath: ../config/public.pem
-        privatePath: ../config/private.pem
+        publicPath: public.pem
+        privatePath: private.pem
 
 postgres:
   host: 127.0.0.1
@@ -39,14 +39,14 @@ server:
   host: 127.0.0.1
   port: 4936
   base: /api
-  mode: debug
+  mode: release
   requestIdHeader: X-Request-ID
   readTimeout: 5m
   writeTimeout: 5m
   maxHeaderBytes: 1048576
 
 swagger:
-  enable: true
+  enable: false
   docsBase: /docs
   version: "v1"
   title: "Api docs"
@@ -66,4 +66,4 @@ swagger:
 logger:
   level: 63
   stdoutWriter:
-    enable: true
+    enable: false

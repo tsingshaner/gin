@@ -8,6 +8,7 @@ use (
 	./e2e
 	./gen
 	./middleware
+	./mod/comment
 	./mod/user
 	./resp
 	./shared

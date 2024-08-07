@@ -11,6 +11,8 @@ api/open-api/*
 !api/open-api/api.md
 
 mod/**/handler_gen.go
+mod/*/constant/*/*_gen.go
+mod/*/internal/repository/query
 
 *.log
 *.db

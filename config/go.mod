@@ -1,6 +1,6 @@
 module github.com/tsingshaner/gin/config
 
-go 1.22
+go 1.23
 
 require github.com/tsingshaner/go-pkg/conf v0.1.1
 

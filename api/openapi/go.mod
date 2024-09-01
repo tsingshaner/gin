@@ -1,6 +1,6 @@
 module github.com/tsingshaner/gin/api/openapi
 
-go 1.22
+go 1.23
 
 require github.com/swaggo/swag v1.16.3
 

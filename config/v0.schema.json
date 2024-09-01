@@ -313,6 +313,28 @@
           "type": "integer",
           "examples": [63]
         },
+        "gorm": {
+          "type": "object",
+          "required": ["level", "slowThreshold"],
+          "properties": {
+            "level": {
+              "description": "gorm logger level",
+              "type": "integer",
+              "examples": [63]
+            },
+            "slowThreshold": {
+              "description": "slow query threshold",
+              "type": "string",
+              "examples": ["200ms"]
+            },
+            "ignoreRecordNotFoundError": {
+              "type": "boolean"
+            },
+            "parameterizedQueries": {
+              "type": "boolean"
+            }
+          }
+        },
         "stdoutWriter": {
           "type": "object",
           "required": ["enable"],
@@ -325,7 +347,7 @@
           }
         }
       },
-      "required": ["level"]
+      "required": ["level", "gorm"]
     }
   }
 }

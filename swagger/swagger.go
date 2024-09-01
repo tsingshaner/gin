@@ -28,8 +28,14 @@ func New(conf ginSwag.Config) gin.HandlerFunc {
 
 func MergeDocsOptions(spec *swag.Spec, opts *Options) {
 	spec.BasePath = opts.ApiBase
-	spec.Description = opts.Description
 	spec.Host = opts.Host
-	spec.Title = opts.Title
 	spec.Version = opts.Version
+
+	if opts.Title != "" {
+		spec.Title = opts.Title
+	}
+
+	if opts.Description != "" {
+		spec.Description = opts.Description
+	}
 }

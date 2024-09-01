@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=../../../../gen/handler/schema.json
+version: 1
+
+api:
+  /users:
+    guards: [auth]
+
+    # get: searchUsers
+
+    /profile:
+      get: getProfile
+
+    /:id:
+      get: getUser
+      # delete: deleteUser
+      # put: updateUser
+
+      /password:
+        patch: updatePassword
+
+  /auth:
+    /login:
+      post: login
+
+    /register:
+      post: register
+
+    # /token:
+    #   put: refreshToken

@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+env:
+  GO111MODULE: on
+  GOPROXY: https://goproxy.cn,direct
+  FORCE_COLOR: 1
+
+vars:
+  PACKAGE: github.com/tsingshaner/gin/mod/user
+
+tasks:
+  e2e:
+    deps: [e2e:handler, e2e:repo]
+
+  e2e:handler:
+    vars:
+      RUN: "{{if not (empty .CLI_ARGS)}} --run {{.CLI_ARGS}}{{end}}"
+    cmd: go test -v -timeout 30s{{.RUN}} ./test/handler/...
+
+  e2e:repo:
+    vars:
+      RUN: "{{if not (empty .CLI_ARGS)}} --run {{.CLI_ARGS}}{{end}}"
+    cmd: go test -v -timeout 30s{{.RUN}} ./test/repository/...
+
+  gen:
+    cmds:
+      - task: gen:constant
+      - task: gen:handler
+      - task: gen:gorm
+
+  gen:constant:
+    generates: [./constant/*/*_gen.go]
+    sources: [./constant/constant.yml]
+    cmd: go generate -v ./constant/constant.go
+
+  gen:handler:
+    generates: [./internal/handler/handler_gen.go]
+    sources: [./internal/handler/handler.yml]
+    cmd: go generate -v ./internal/handler/handler.go
+
+  gen:gorm:
+    generates: [./internal/repository/query/*]
+    sources: [./user_gorm.go]
+    cmd: go generate -v ./user_gorm.go

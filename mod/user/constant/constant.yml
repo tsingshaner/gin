@@ -1,0 +1,110 @@
+# yaml-language-server: $schema=../../../gen/constant/schema.json
+
+modCode: US
+
+pkg: errs
+file: errs/errs_gen.go
+
+successPkg: code
+successFile: code/code_gen.go
+
+basic:
+  B0:
+    key: Hash
+    msg: 密码哈希错误
+
+  B1:
+    key: DataNotFound
+    msg: 数据库查询为空
+
+  B2:
+    key: DataQuery
+    msg: 数据库查询错误
+
+  B3:
+    key: DataInsert
+    msg: 数据库插入失败
+
+  B4:
+    key: Duplicate
+    msg: 数据库插入重复
+
+  B5:
+    key: Delete
+    msg: 数据库删除失败
+
+rest:
+  BadRequest:
+    B0:
+      key: BearerToken
+      msg: BearerToken 校验错误
+
+    B1:
+      key: UserExist
+      msg: 用户名已存在
+
+  NotFound:
+    N0:
+      key: User
+      msg: 用户不存在
+
+  Unauthorized:
+    U0:
+      key: Login
+      msg: 用户名或密码错误
+
+    U1:
+      key: TokenExpired
+      msg: 访问令牌已过期
+
+  Forbidden:
+    F0:
+      key: RoleNotMatch
+      msg: 用户角色不匹配
+
+  InternalServerError:
+    I0:
+      key: DatabaseConnect
+      msg: 数据库连接错误
+
+    I1:
+      key: DatabaseQuery
+      msg: 数据库查询错误
+
+    I2:
+      key: DatabaseInsert
+      msg: 数据库插入错误
+
+    I3:
+      key: PasswordHash
+      msg: 密码哈希错误
+
+    I4:
+      key: GenToken
+      msg: Token 生成错误
+
+  NotImplemented:
+    N0:
+      key: None
+      msg: 服务端未实现
+
+success:
+  S0:
+    key: Register
+    msg: 用户注册成功
+
+  S1:
+    key: Login
+    msg: 用户登录成功
+
+  S2:
+    key: UpdatePassword
+    msg: 密码修改成功
+
+  S3:
+    key: GetProfile
+    msg: 获取用户信息成功
+
+  S4:
+    key: GetUser
+    msg: 查询用户成功

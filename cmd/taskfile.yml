@@ -8,6 +8,10 @@ env:
 interval: 500ms
 
 tasks:
+  migrate: atlas migrate diff --env gorm
+  migrate:apply:
+    cmd: atlas migrate apply --env gorm --dir file://./migrations {{.CLI_ARGS}}
+
   start: go run server/main.go --config ../config/config.example.yml
 
   start:dev:
@@ -47,3 +51,9 @@ tasks:
         platforms: [linux, darwin]
         ignore_error: true
         silent: true
+
+  secret:
+    desc: generate jwt ed25519 key pair
+    cmds:
+      - openssl genpkey -algorithm ed25519 -out private.pem
+      - openssl.exe pkey -in private.pem -pubout -out public.pem

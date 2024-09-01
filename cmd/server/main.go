@@ -6,5 +6,6 @@ import (
 )
 
 func main() {
+	config.Init()
 	app.New(&config.Store().Options).Start()
 }

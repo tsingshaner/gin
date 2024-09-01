@@ -1,22 +1,19 @@
 package main
 
 import (
-	"github.com/tsingshaner/gin-starter/config"
-	app "github.com/tsingshaner/gin-starter/internal"
-	"github.com/tsingshaner/gin-starter/pkg/database"
-	"github.com/tsingshaner/gin-starter/pkg/logger"
-	"gorm.io/gorm"
+	"io"
+	"os"
+
+	"ariga.io/atlas-provider-gorm/gormschema"
+
+	userModels "github.com/tsingshaner/gin/mod/user/model"
+	"github.com/tsingshaner/go-pkg/log/console"
 )
 
 func main() {
-	db := database.ConnectDB(config.Database.Postgres, &gorm.Config{})
-
-	server := &app.Context{DB: db}
-
-	if err := server.Migrate(); err != nil {
-		logger.Error("migrate database failed")
-		panic(err)
+	stmts, err := gormschema.New("postgres").Load(&userModels.User{})
+	if err != nil {
+		console.Fatal("failed to load gorm schema: %v\n", err)
 	}
-
-	logger.Info("migrate database success")
+	io.WriteString(os.Stdout, stmts)
 }

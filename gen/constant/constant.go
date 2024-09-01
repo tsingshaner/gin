@@ -3,10 +3,11 @@ package constant
 import (
 	_ "embed"
 	"os"
+	"path/filepath"
 	"strings"
 	"text/template"
 
-	genUtil "github.com/tsingshaner/gin/gen"
+	"github.com/tsingshaner/go-pkg/conf"
 	"github.com/tsingshaner/go-pkg/errors/gen"
 	"github.com/tsingshaner/go-pkg/log/console"
 )
@@ -23,7 +24,9 @@ func init() {
 }
 
 func GenerateSuccessAndErrorConstants() {
-	c := genUtil.Read[config]()
+	c := conf.Read[config]()
+	mkdirForConstant(c.SuccessFile)
+	mkdirForConstant(c.File)
 	generateSuccessCode(c)
 	gen.GeneratePkg(&c.ErrorConfig)
 }
@@ -82,4 +85,10 @@ func generateSuccessCode(c *config) {
 	}
 
 	console.Info("generate pkg %s success", c.SuccessFile)
+}
+
+func mkdirForConstant(path string) {
+	if err := os.MkdirAll(filepath.Dir(path), os.ModePerm); err != nil {
+		console.Fatal("mkdir %s err %+v", filepath.Dir(path), err)
+	}
 }

@@ -9,7 +9,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/tsingshaner/gin/gen"
+	"github.com/tsingshaner/go-pkg/conf"
 	"github.com/tsingshaner/go-pkg/log/console"
 )
 
@@ -54,7 +54,7 @@ var handlerChains []string
 var handlerGuards []string
 
 func Gen() {
-	c := gen.Read[handlerConf]()
+	c := conf.Read[handlerConf]()
 	tplInfo := &tplData{
 		Chains: handlerChains,
 		Guards: handlerGuards,

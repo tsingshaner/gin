@@ -8,6 +8,20 @@ env:
 vars:
   TARGET: ./target
   APP_ENTRY: ./cmd/server/main.go
+  MODS:
+    - ./api/openapi
+    - ./app
+    - ./cmd
+    - ./config
+    - ./e2e
+    - ./gen
+    - ./middleware
+    - ./mod/comment
+    - ./mod/user
+    - ./resp
+    - ./shared
+    - ./swagger
+    - ./validator
 
 # 监听文件变化的时间间隔
 interval: 500ms
@@ -35,6 +49,20 @@ includes:
 
 tasks:
   default: task --list-all
+
+  bump:
+    desc: bump dependencies for all sub packages
+    deps:
+      - for: { var: MODS }
+        task: _bump
+        vars: { MOD: "{{.ITEM}}" }
+    cmd: go work sync
+  _bump:
+    internal: true
+    dir: "./{{.MOD}}"
+    cmds:
+      - go get -u ./...
+      - go mod tidy
 
   githooks:
     summary: setup Git hooks

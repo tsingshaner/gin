@@ -12,7 +12,7 @@
 		"go.work": "",
 		"README.md": "LICENSE, CHANGELOG.md,CONTRIBUTING.md, *.svg",
 		".gitignore": ".gitignore, .dockerignore, .editorconfig, .gitattributes, .gitmodules, .gitmessage, .mailmap, .git-blame*",
-		"handler.go": "handler_gen.go, handler.yml",
+		"handler.go": "handler_gen.go",
     "*.go": "${capture}_test.go, ${capture}_bench_test.go",
 	},
   "go.formatTool": "gofmt",
@@ -26,6 +26,7 @@
     }
   },
   "cSpell.words": [
+    "bitmask",
     "gorm",
     "httplogger",
     "mapstructure",
@@ -33,8 +34,11 @@
     "pkill",
     "prettylog",
     "requestid",
+    "startswith",
+    "stretchr",
     "taskfile",
     "taskkill",
+    "testcontainers",
     "tsingshaner",
     "varchar"
   ]

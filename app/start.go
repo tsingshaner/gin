@@ -9,6 +9,7 @@ import (
 // Start init and listening server
 func (a *app) Start() {
 	a.Ready()
+	a.BindRoutes()
 
 	go func(a *app) {
 		console.Info("server will listening on \x1b[36;4mhttp://%s:%d%s\x1b[0m",

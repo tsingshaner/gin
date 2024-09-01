@@ -1,24 +1,32 @@
 module github.com/tsingshaner/gin/app
 
-go 1.22
+go 1.23
 
 require (
 	github.com/gin-gonic/gin v1.10.0
-	github.com/tsingshaner/go-pkg/log v0.2.2
+	github.com/tsingshaner/go-pkg/log v0.4.1
+	github.com/tsingshaner/go-pkg/util v0.7.1
 	go.uber.org/zap v1.27.0
 	gorm.io/gorm v1.25.11
 )
 
 require (
-	github.com/bytedance/sonic v1.11.9 // indirect
-	github.com/bytedance/sonic/loader v0.1.1 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
+	github.com/jackc/pgx/v5 v5.5.5 // indirect
+	github.com/jackc/puddle/v2 v2.2.1 // indirect
+)
+
+require (
+	github.com/bytedance/sonic v1.12.0 // indirect
+	github.com/bytedance/sonic/loader v0.2.0 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect
 	github.com/cloudwego/iasm v0.2.0 // indirect
-	github.com/gabriel-vasile/mimetype v1.4.4 // indirect
+	github.com/gabriel-vasile/mimetype v1.4.5 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/go-playground/locales v0.14.1 // indirect
+	github.com/go-playground/locales v0.14.1
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.22.0 // indirect
+	github.com/go-playground/validator/v10 v10.22.0
 	github.com/goccy/go-json v0.10.3 // indirect
 	github.com/gookit/goutil v0.6.16 // indirect
 	github.com/gookit/slog v0.5.6 // indirect
@@ -32,9 +40,8 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
-	github.com/tsingshaner/go-pkg/color v0.2.1 // indirect
-	github.com/tsingshaner/go-pkg/prettylog v0.1.2 // indirect
-	github.com/tsingshaner/go-pkg/util v0.5.0 // indirect
+	github.com/tsingshaner/go-pkg/color v0.3.0 // indirect
+	github.com/tsingshaner/go-pkg/prettylog v0.3.1 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
@@ -47,4 +54,5 @@ require (
 	golang.org/x/text v0.16.0 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	gorm.io/driver/postgres v1.5.9
 )

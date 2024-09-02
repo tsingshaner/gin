@@ -1,6 +1,6 @@
 package handler_test
 
-import "github.com/tsingshaner/gin/e2e/h3test"
+import "github.com/tsingshaner/go-pkg/h3test"
 
 var api = struct {
 	authRegister, authLogin *h3test.Request

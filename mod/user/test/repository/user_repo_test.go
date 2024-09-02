@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/tsingshaner/gin/e2e/container"
+	"github.com/tsingshaner/gin/e2e"
 	"github.com/tsingshaner/gin/mod/user/dto"
 	"github.com/tsingshaner/gin/mod/user/internal/entity"
 	"github.com/tsingshaner/gin/shared"
@@ -13,7 +13,7 @@ import (
 func TestUserRepo(t *testing.T) {
 	t.Parallel()
 
-	server, cleanup := container.NewAppWithCleanup()
+	server, cleanup := e2e.NewAppWithCleanup()
 	t.Cleanup(cleanup)
 
 	userRepo := server.Providers().Repo.User

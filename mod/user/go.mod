@@ -1,18 +1,22 @@
 module github.com/tsingshaner/gin/mod/user
 
-go 1.23
+go 1.23.0
 
 require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/stretchr/testify v1.9.0
+	github.com/tsingshaner/gin/resp v0.0.0-20240901084405-f086a4cdfc16
+	github.com/tsingshaner/gin/shared v0.0.0-20240901084405-f086a4cdfc16
+	github.com/tsingshaner/gin/validator v0.0.0-20240901084405-f086a4cdfc16
 	github.com/tsingshaner/go-pkg/errors v0.4.0
+	github.com/tsingshaner/go-pkg/h3test v0.0.1
 	github.com/tsingshaner/go-pkg/jwt v0.0.5
 	github.com/tsingshaner/go-pkg/log v0.4.1
 	github.com/tsingshaner/go-pkg/util v0.7.1
 	golang.org/x/crypto v0.26.0
 	gorm.io/gen v0.3.26
 	gorm.io/gorm v1.25.11
-	gorm.io/plugin/dbresolver v1.5.0
+	gorm.io/plugin/dbresolver v1.5.2
 )
 
 require (
@@ -45,7 +49,6 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.3 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
-	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/tsingshaner/go-pkg/color v0.3.0 // indirect
 	github.com/tsingshaner/go-pkg/prettylog v0.3.1 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
@@ -62,10 +65,10 @@ require (
 	golang.org/x/tools v0.24.0 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	gorm.io/datatypes v1.1.1-0.20230130040222-c43177d3cf8c // indirect
+	gorm.io/datatypes v1.2.1 // indirect
 	gorm.io/driver/mysql v1.5.7 // indirect
 	gorm.io/driver/postgres v1.5.9 // indirect
 	gorm.io/driver/sqlite v1.5.6 // indirect
 	gorm.io/driver/sqlserver v1.5.3 // indirect
-	gorm.io/hints v1.1.0 // indirect
+	gorm.io/hints v1.1.2 // indirect
 )

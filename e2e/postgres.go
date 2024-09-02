@@ -1,4 +1,4 @@
-package container
+package e2e
 
 import (
 	"context"

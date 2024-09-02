@@ -5,15 +5,15 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/tsingshaner/gin/e2e/container"
-	"github.com/tsingshaner/gin/e2e/h3test"
+	"github.com/tsingshaner/gin/e2e"
 	"github.com/tsingshaner/gin/mod/user/constant/code"
+	"github.com/tsingshaner/go-pkg/h3test"
 )
 
 func TestAuthLogin(t *testing.T) {
 	t.Parallel()
 
-	server, cleanup := container.NewAppWithCleanup()
+	server, cleanup := e2e.NewAppWithCleanup()
 	t.Cleanup(cleanup)
 
 	t.Run("PasswordOrUsernameNotMatch", func(t *testing.T) {

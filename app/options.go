@@ -59,7 +59,7 @@ type (
 		Base string `mapstructure:"base"`
 		Mode string `mapstructure:"mode"`
 
-		RequestIdHeader string        `mapstructure:"requestIdHeader"`
+		RequestIDHeader string        `mapstructure:"requestIdHeader"`
 		ReadTimeout     time.Duration `mapstructure:"readTimeout"`
 		WriteTimeout    time.Duration `mapstructure:"writeTimeout"`
 		MaxHeaderBytes  int           `mapstructure:"maxHeaderBytes"`

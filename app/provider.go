@@ -7,7 +7,7 @@ import (
 
 type providers struct {
 	Repo struct {
-		User *user.UserRepo
+		User *user.Repo
 	}
 
 	ui.Auth

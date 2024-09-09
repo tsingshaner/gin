@@ -62,7 +62,7 @@ func (a *app) buildEngine() {
 	a.engine = gin.New()
 	a.engine.NoRoute(middleware.NotFoundHandler)
 	a.engine.Use(
-		requestid.New(&requestid.Options{HeaderKey: a.Options.Server.RequestIdHeader}),
+		requestid.New(&requestid.Options{HeaderKey: a.Options.Server.RequestIDHeader}),
 		helper.New(&helper.Options{Logger: a.logger, TraceIDExtractor: requestid.Get}),
 		middleware.NewErrorHandler(a.logger),
 		middleware.Cors(a.Options.Cors),

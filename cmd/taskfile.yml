@@ -7,17 +7,38 @@ env:
 
 interval: 500ms
 
+vars:
+  APP_NAME: server
+
 tasks:
   migrate: atlas migrate diff --env gorm
   migrate:apply:
     cmd: atlas migrate apply --env gorm --dir file://./migrations {{.CLI_ARGS}}
 
-  start: go run server/main.go --config ../config/config.example.yml
+  build:
+    cmd: go build -o target/{{.APP_NAME}}{{exeExt}} server/main.go
+    desc: Build the server for local machine
+    deps: [swag]
+    sources:
+      - ./server/main.go
+      - ../api/openapi/docs.go
+      - ../app/*.go
+      - ../config/*
+      - ../mod/**/*.go
+
+  start:
+    desc: Start server app
+    deps: [build]
+    cmds:
+      - ./target/{{.APP_NAME}}{{exeExt}} --config ../config/config.example.yml  {{.CLI_ARGS}}
 
   start:dev:
+    desc: Start the server and restart when files changed
+    deps: [build]
     watch: true
-    cmd: task start | prettylog
-    deps: [swag, kill]
+    cmds:
+      - task kill
+      - task start -- --silence | prettylog
     env: { FORCE_COLOR: 1 }
     method: none
     run: always
@@ -28,7 +49,7 @@ tasks:
       - ../config/*
 
   swag:
-    desc: "Generate swagger docs"
+    desc: Generate swagger docs
     vars:
       CLI_PATH_ARGS: -d ../app,../mod/user -g ../app/app.go -o ../api/openapi --md ../api/md
       CLI_FLAG_ARGS: --parseDependency --parseInternal
@@ -41,19 +62,17 @@ tasks:
       - ../swagger/*.go
 
   kill:
-    desc: "kill the running server"
+    desc: Kill the running server
+    ignore_error: true
+    silent: true
     cmds:
-      - cmd: "taskkill /IM main.exe /F"
+      - cmd: "taskkill /IM {{.APP_NAME}}.exe /F"
         platforms: [windows]
-        ignore_error: true
-        silent: true
-      - cmd: pkill -f "main"
+      - cmd: pkill -f "{{.APP_NAME}}"
         platforms: [linux, darwin]
-        ignore_error: true
-        silent: true
 
   secret:
-    desc: generate jwt ed25519 key pair
+    desc: Generate jwt ed25519 key pair
     cmds:
       - openssl genpkey -algorithm ed25519 -out private.pem
       - openssl.exe pkey -in private.pem -pubout -out public.pem

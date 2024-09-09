@@ -25,6 +25,7 @@ var (
 	currentDir string
 )
 
+//nolint:revive
 func Store() *store {
 	return s.Value
 }
@@ -41,6 +42,7 @@ func Init() {
 // ************************** for test **************************
 
 func init() {
+	//nolint:dogsled
 	_, file, _, _ := runtime.Caller(0)
 	currentDir = filepath.Dir(file)
 }

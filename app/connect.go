@@ -35,7 +35,7 @@ func ConnectPostgres(logger log.Slog, opts *Postgres, loggerOpts GormLoggerOptio
 			}),
 		})
 	}, func(ers *expRetry.ExpRetrySvc[*gorm.DB]) {
-		ers.ErrorHandler = func(e error, times int) {}
+		ers.ErrorHandler = func(_ error, _ int) {}
 	}).Run()
 	if err != nil {
 		console.Fatal("failed to connect database %s", err)

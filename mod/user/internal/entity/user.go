@@ -25,12 +25,12 @@ func HashPassword(password string) (string, error) {
 }
 
 func (u *User) HashPassword() error {
-	if hashedPassword, err := HashPassword(u.Password); err != nil {
+	hashedPassword, err := HashPassword(u.Password)
+	if err != nil {
 		return err
-	} else {
-		u.Password = hashedPassword
 	}
 
+	u.Password = hashedPassword
 	u.passwordHashed = true
 	return nil
 }

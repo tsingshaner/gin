@@ -18,6 +18,7 @@ type Querier interface {
 }
 
 func GenQuery(db *gorm.DB) {
+	//nolint:dogsled
 	_, file, _, _ := runtime.Caller(0)
 
 	g := gen.NewGenerator(gen.Config{

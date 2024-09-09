@@ -23,19 +23,20 @@ func NewUserModify(
 }
 
 func (um *userModify) Create(user *dto.User) (*entity.User, error) {
-	if u, err := um.repo.Save(&entity.User{User: user}); err != nil {
+	u, err := um.repo.Save(&entity.User{User: user})
+	if err != nil {
 		if errors.Is(err, errs.Basic.Duplicate) {
 			return nil, errors.Join(errs.Basic.Duplicate, err)
 		}
 		return nil, errors.Join(errs.InternalServerError.DatabaseInsert, err)
-	} else {
-		return u, nil
 	}
+
+	return u, nil
 }
-func (um *userModify) Update(user *dto.User) (*entity.User, error) {
+func (um *userModify) Update(_ *dto.User) (*entity.User, error) {
 	return nil, errs.NotImplemented.None
 }
-func (um *userModify) Delete(id shared.ID) error {
+func (um *userModify) Delete(_ shared.ID) error {
 	return errs.NotImplemented.None
 }
 

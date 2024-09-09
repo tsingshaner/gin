@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/tsingshaner/gin/e2e"
 	"github.com/tsingshaner/gin/mod/user/constant/code"
 	"github.com/tsingshaner/go-pkg/h3test"
@@ -30,7 +31,7 @@ func TestAuthLogin(t *testing.T) {
 	t.Run("Success", func(t *testing.T) {
 		t.Parallel()
 
-		assert.NoError(t, server.Providers().Auth.Register("admin", "123456"))
+		require.NoError(t, server.Providers().Auth.Register("admin", "123456"))
 
 		res := api.authLogin.JSON(map[string]string{
 			"username": "admin",

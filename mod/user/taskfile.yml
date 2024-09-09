@@ -43,3 +43,7 @@ tasks:
     generates: [./internal/repository/query/*]
     sources: [./user_gorm.go]
     cmd: go generate -v ./user_gorm.go
+
+  lint:
+    deps: [gen]
+    cmd: golangci-lint run ./...

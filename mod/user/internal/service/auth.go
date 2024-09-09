@@ -39,7 +39,7 @@ func (a *auth) Login(username, password string) (*dto.Token, error) {
 		return nil, errs.Unauthorized.Login
 	}
 
-	token, err := &dto.Token{}, error(nil)
+	token := &dto.Token{}
 
 	if token.Access, err = a.tm.SignedWithClaims(Alg,
 		user.BuildAuthPayload(a.tm.NewRegisteredClaims(false)),
@@ -56,7 +56,7 @@ func (a *auth) Login(username, password string) (*dto.Token, error) {
 	return token, nil
 }
 
-func (a *auth) Refresh(userID shared.ID) (*dto.Token, error) {
+func (a *auth) Refresh(_ shared.ID) (*dto.Token, error) {
 	return nil, errs.NotImplemented.None
 }
 

@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/tsingshaner/gin/e2e"
 	"github.com/tsingshaner/gin/mod/user/dto"
 	"github.com/tsingshaner/gin/mod/user/internal/entity"
@@ -27,7 +28,7 @@ func TestUserRepo(t *testing.T) {
 			Nickname: "Save",
 		})))
 
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.NotNil(t, user)
 		assert.Greater(t, user.ID, shared.ID(0))
 		assert.Nil(t, user.Role)
@@ -43,7 +44,7 @@ func TestUserRepo(t *testing.T) {
 			Nickname: "SaveAsUpdate",
 		})))
 
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.NotNil(t, user)
 		assert.Equal(t, id, user.ID)
 		assert.Nil(t, user.Role)
@@ -59,11 +60,11 @@ func TestUserRepo(t *testing.T) {
 			Username: "QueryByID",
 			Password: "QueryByID",
 		})))
-		assert.NoError(t, err)
+		require.NoError(t, err)
 
 		user, err := userRepo.GetUserByID(u.ID)
 
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.NotNil(t, user)
 		assert.Equal(t, u.ID, user.ID)
 		assert.Equal(t, u.Username, user.Username)
@@ -78,15 +79,15 @@ func TestUserRepo(t *testing.T) {
 			Password: "Create",
 		})))
 
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.NotNil(t, user)
 		assert.Greater(t, user.ID, shared.ID(0))
 
-		assert.NoError(t, userRepo.Remove(user.ID))
+		require.NoError(t, userRepo.Remove(user.ID))
 
 		user.ID = 0
 		user, err = userRepo.Save(user)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.NotNil(t, user)
 		assert.Greater(t, user.ID, shared.ID(0))
 		assert.Equal(t, "CreateWithASoftDeletedUsername", user.Username)

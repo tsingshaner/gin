@@ -16,11 +16,11 @@ func NewUserQuery(repo *repository.User) interfaces.UserQuery {
 	return &userQuery{repo}
 }
 
-func (uq *userQuery) ByID(id shared.ID) (*entity.User, error) {
+func (uq *userQuery) ByID(_ shared.ID) (*entity.User, error) {
 	return nil, errs.NotImplemented.None
-
 }
-func (uq *userQuery) ByIDs(ids []shared.ID) ([]*entity.User, error) {
+
+func (uq *userQuery) ByIDs(_ []shared.ID) ([]*entity.User, error) {
 	return nil, errs.NotImplemented.None
 }
 

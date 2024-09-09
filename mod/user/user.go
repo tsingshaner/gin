@@ -17,5 +17,5 @@ var (
 
 type (
 	HandlerProvider = handler.Provider
-	UserRepo        = repository.User
+	Repo            = repository.User
 )

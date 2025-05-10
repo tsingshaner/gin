@@ -55,19 +55,31 @@ var handlerGuards []string
 
 func Gen() {
 	c := conf.Read[handlerConf]()
-	tplInfo := &tplData{
-		Chains: handlerChains,
-		Guards: handlerGuards,
-		Api:    parseApiData(c.Api, "", "r").Child,
-	}
-
 	output := flag.String("output", "handler_gen.go", "handler file output")
 	flag.Parse()
 	if pwd, err := os.Getwd(); err == nil {
 		*output = filepath.Join(pwd, *output)
 	}
 
-	if writer, err := os.OpenFile(*output, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644); err == nil {
+	GenerateHandler(&GenerateHandlerOptions{
+		OutputPath: *output,
+		Routes:     c.Api,
+	})
+}
+
+type GenerateHandlerOptions struct {
+	Routes     map[string]any
+	OutputPath string
+}
+
+func GenerateHandler(opts *GenerateHandlerOptions) {
+	tplInfo := &tplData{
+		Chains: handlerChains,
+		Guards: handlerGuards,
+		Api:    parseApiData(opts.Routes, "", "r").Child,
+	}
+
+	if writer, err := os.OpenFile(opts.OutputPath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644); err == nil {
 		if err := tpl.Execute(writer, tplInfo); err != nil {
 			console.Fatal("%+v", err)
 		}

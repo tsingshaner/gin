@@ -17,16 +17,21 @@ func Mkdir() {
 			os.MkdirAll(pwd+"/"+folder+"/"+subFolder, 0755)
 		}
 	}
+
+	for _, file := range initFiles {
+		os.Create(pwd + file)
+	}
 }
 
 type folderTree = map[string][]string
 
 var folderTreeMap = folderTree{
-	"constant": []string{"code", "errs"},
-	"dto":      []string{},
-	"internal": []string{"entity", "handler", "repository", "service"},
-	"model":    []string{},
-	"test":     []string{"handler", "repository"},
+	"constant":   []string{"code", "errs"},
+	"dto":        []string{},
+	"interfaces": []string{},
+	"internal":   []string{"entity", "handler", "repository", "service"},
+	"model":      []string{},
+	"test":       []string{"handler", "repository"},
 }
 
 var initFiles = []string{

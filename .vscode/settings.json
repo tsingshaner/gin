@@ -1,22 +1,24 @@
 {
   "explorer.fileNesting.enabled": true,
-	"explorer.fileNesting.expand": false,
+  "explorer.fileNesting.expand": false,
   "editor.quickSuggestions": {
-        "strings": true
+    "strings": true
   },
   "editor.suggest.showWords": true,
-	"explorer.fileNesting.patterns": {
-		"taskfile.yml": "taskfile*,go.work, go.work.sum, go.mod, go.sum, *.pem",
+  "explorer.fileNesting.patterns": {
+    "taskfile.yml": "taskfile*,go.work, go.work.sum, go.mod, go.sum, *.pem",
     "config.go": "config.*",
-		"go.mod": "go.sum",
-		"go.work": "",
-		"README.md": "LICENSE, CHANGELOG.md,CONTRIBUTING.md, *.svg",
-		".gitignore": ".gitignore, .dockerignore, .editorconfig, .gitattributes, .gitmodules, .gitmessage, .mailmap, .git-blame*",
-		"handler.go": "handler_gen.go",
-    "*.go": "${capture}_test.go, ${capture}_bench_test.go",
-	},
+    "go.mod": "go.sum",
+    "go.work": "",
+    "README.md": "LICENSE, CHANGELOG.md,CONTRIBUTING.md, *.svg",
+    ".gitignore": ".gitignore, .dockerignore, .editorconfig, .gitattributes, .gitmodules, .gitmessage, .mailmap, .git-blame*",
+    "handler.go": "handler_gen.go",
+    "*.go": "${capture}_test.go, ${capture}_bench_test.go"
+  },
   "go.formatTool": "gofmt",
   "go.lintOnSave": "package",
+  "go.lintTool": "golangci-lint",
+  "go.lintFlags": ["--fast"],
   "[go]": {
     "editor.defaultFormatter": "golang.go",
     "editor.insertSpaces": false,

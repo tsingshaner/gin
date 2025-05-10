@@ -31,10 +31,10 @@ func TestAuthLogin(t *testing.T) {
 	t.Run("Success", func(t *testing.T) {
 		t.Parallel()
 
-		require.NoError(t, server.Providers().Auth.Register("admin", "123456"))
+		require.NoError(t, server.Providers().Auth.Register("login_success", "123456"))
 
 		res := api.authLogin.JSON(map[string]string{
-			"username": "admin",
+			"username": "login_success",
 			"password": "123456",
 		}).Send(server.Engine())
 

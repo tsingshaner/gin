@@ -31,14 +31,6 @@ includes:
     dir: cmd
     taskfile: cmd/taskfile.yml
 
-  config:
-    dir: config
-    taskfile: config/taskfile.yml
-
-  e2e:
-    dir: e2e
-    taskfile: e2e/taskfile.yml
-
   gen:
     dir: gen
     taskfile: gen/taskfile.yml
@@ -77,6 +69,12 @@ tasks:
     summary: 安装依赖
     cmds:
       - go mod download
+
+  lint:
+    summary: lint
+    cmds:
+      - for: { var: MODS }
+        cmd: golangci-lint run {{.ITEM}}/...
 
   docs:
     summary: 更新 swagger 文档

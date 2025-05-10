@@ -10,3 +10,7 @@ tasks:
     summary: 生成 handler
     cmds:
       - go run ./cmd/gen-handler/main.go {{.CLI_ARGS}}
+
+  tpml:
+    cmds:
+      - go run ./cmd/tpml/main.go {{.CLI_ARGS}}

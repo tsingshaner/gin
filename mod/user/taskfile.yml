@@ -23,6 +23,14 @@ tasks:
       RUN: "{{if not (empty .CLI_ARGS)}} --run {{.CLI_ARGS}}{{end}}"
     cmd: go test -v -timeout 30s{{.RUN}} ./test/repository/...
 
+  cov:
+    cmds:
+      - cmd: powershell New-Item -ItemType Directory -Force -Path ./coverage
+        platforms: [windows]
+      - cmd: mkdir -p ./coverage
+        platforms: [linux, darwin]
+      - go test -coverprofile=coverage/cov_unit.txt -covermode=atomic ./...
+
   gen:
     cmds:
       - task: gen:constant

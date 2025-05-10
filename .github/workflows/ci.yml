@@ -1,0 +1,63 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: app/go.mod
+          cache-dependency-path: |
+            go.work.sum
+            **/go.sum
+
+      - name: Cache Go CLI tools
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/bin
+          key: ${{ runner.os }}-swag-v2
+          restore-keys: |
+            ${{ runner.os }}-go-CLI
+
+      - name: Install project tools
+        run: task install:tools
+
+      - name: Install dependencies
+        run: task install:libs
+
+      - name: Generate files
+        run: task gen
+
+      - name: Lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.60.3
+
+      - uses: autofix-ci/action@ff86a557419858bb967097bfc916833f5647fa8c
+        with:
+          commit-message: "chore: apply automated fixes"
+
+      - name: Build
+        run: go build -v ./...
+
+      - name: Test
+        run: go test -v ./...

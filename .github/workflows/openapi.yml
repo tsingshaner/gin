@@ -4,13 +4,11 @@ on:
   push:
     branches: ["main"]
     paths:
-      - 'internal/**'
-      - 'pkg/**'
+      - 'api/**'
+      - 'app/**'
       - 'cmd/**'
       - 'config/**'
-      - 'api/**'
-      - 'go.sum'
-      - 'go.mod'
+      - 'mod/**'
 
 permissions:
   contents: read
@@ -28,11 +26,14 @@ jobs:
         with:
           go-version: "go.mod"
 
-      - name: Install swag
-        run: go install github.com/swaggo/swag/cmd/swag@latest
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install task
-        run: go install github.com/go-task/task/v3/cmd/task@latest
+      - name: Install Swaggo
+        run: go install github.com/swaggo/swag/cmd/swag@latest
 
       - name: Install Dependencies
         run: task install
@@ -47,7 +48,7 @@ jobs:
           echo "$RSA_PUBLIC_KEY }}" > ./config/public_key.pem
 
       - name: Open API
-        run: task docs
+        run: task cmd:swag
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -55,7 +56,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: api/open-api
+          path: api/openapi
 
       - name: Deploy to GitHub Pages
         id: deployment
